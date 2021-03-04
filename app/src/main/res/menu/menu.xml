@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_search"
+        android:title="검색"
+        android:icon="@drawable/ic_glyph_solid_search"/>
+    <item
+        android:id="@+id/bottom_community"
+        android:title="커뮤니티"
+        android:icon="@drawable/ic_glyph_solid_users"/>
+    <item
+        android:id="@+id/bottom_champion"
+        android:title="챔피언"
+        android:icon="@drawable/ic_glyph_brands_bitcoin"/>
+    <item
+        android:id="@+id/bottom_ranking"
+        android:title="랭킹"
+        android:icon="@drawable/ic_glyph_solid_trophy"/>
+    <item
+        android:id="@+id/bottom_login"
+        android:title="로그인"
+        android:icon="@drawable/ic_glyph_solid_trophy"/>
+</menu>
