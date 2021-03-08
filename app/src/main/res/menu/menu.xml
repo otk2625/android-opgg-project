@@ -19,5 +19,5 @@
     <item
         android:id="@+id/bottom_login"
         android:title="로그인"
-        android:icon="@drawable/ic_glyph_solid_trophy"/>
+        android:icon="@drawable/ic_glyph_solid_lock_open"/>
 </menu>
