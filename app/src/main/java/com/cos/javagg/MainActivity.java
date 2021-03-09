@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private Context mContext = MainActivity.this;
     private BottomNavigationView bottomNavigationView;
 
-    public Integer num = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

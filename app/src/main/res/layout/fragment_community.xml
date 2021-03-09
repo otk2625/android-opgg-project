@@ -6,60 +6,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/toolbar_community"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_marginBottom="10dp">
+        android:paddingRight="10dp">
 
-        <TextView
-            android:id="@+id/textView2"
+        <Button
+            android:id="@+id/btn_favorite"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:text="커뮤니티"
-            android:textSize="25dp"
-            app:layout_constraintEnd_toStartOf="@+id/ftv_bars"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ftv_gamepad"
-            app:layout_constraintTop_toTopOf="@+id/ftv_gamepad" />
-
-        <info.androidhive.fontawesome.FontTextView
-            android:id="@+id/ftv_gamepad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fa_gamepad_solid"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_fire"
+            android:text="인기"
             android:textColor="@android:color/darker_gray"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            android:textSize="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/btn_new"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:solid_icon="true" />
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <info.androidhive.fontawesome.FontTextView
-            android:id="@+id/ftv_bars"
+        <Button
+            android:id="@+id/btn_new"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fa_bars_solid"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_fire"
+            android:text="최신"
             android:textColor="@android:color/darker_gray"
-            android:textSize="25dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/btn_top"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_favorite"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <Button
+            android:id="@+id/btn_top"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_fire"
+            android:text="TOP"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toTopOf="@+id/textView2"
-            app:solid_icon="true" />
+            app:layout_constraintStart_toEndOf="@+id/btn_new"
+            tools:layout_editor_absoluteY="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
-
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_post_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
