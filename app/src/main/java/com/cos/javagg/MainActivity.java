@@ -5,20 +5,30 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.cos.javagg.fragment.ChampionFragment;
 import com.cos.javagg.fragment.CommunityFragment;
 import com.cos.javagg.fragment.LoginFragment;
+import com.cos.javagg.fragment.MakePostFragment;
 import com.cos.javagg.fragment.RankingFragment;
 import com.cos.javagg.fragment.SearchFragment;
 
+import com.cos.javagg.listener.OnBackPressedListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
 
-    private static final String TAG = "MainActivity";
+import info.androidhive.fontawesome.FontTextView;
+
+public class MainActivity extends AppCompatActivity implements OnBackPressedListener {
+
+    private static final String TAG = "MainActivity2";
     private Context mContext = MainActivity.this;
     private BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+
 
         //최초 화면
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
@@ -57,5 +68,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
 
 }

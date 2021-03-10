@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerArray">
+        <item> 채널 선택 </item>
+        <item> 자유 </item>
+        <item> 유머 </item>
+        <item> 영상 </item>
+        <item> 팁과 노하우 </item>
+    </string-array>
+
+</resources>

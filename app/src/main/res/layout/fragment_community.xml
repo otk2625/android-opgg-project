@@ -15,6 +15,7 @@
         android:paddingRight="10dp">
 
         <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/btn_favorite"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -29,6 +30,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/btn_new"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -44,6 +46,7 @@
             tools:layout_editor_absoluteY="0dp" />
 
         <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/btn_top"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
