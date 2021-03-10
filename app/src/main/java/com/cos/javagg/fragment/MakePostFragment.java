@@ -44,6 +44,7 @@ public class MakePostFragment extends Fragment {
 
         스피너(view);
 
+        //썸머노트
         summernote = (Summernote) view.findViewById(R.id.summernote);
         summernote.setRequestCodeforFilepicker(5);//Any Number which is not being used by other OnResultActivity
 
