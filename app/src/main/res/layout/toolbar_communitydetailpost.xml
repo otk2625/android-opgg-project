@@ -30,14 +30,14 @@
             android:textSize="25dp"
             app:layout_constraintEnd_toStartOf="@+id/ftv_bars"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ftv_gamepad"
-            app:layout_constraintTop_toTopOf="@+id/ftv_gamepad" />
+            app:layout_constraintStart_toEndOf="@+id/ftv_DetailPostback"
+            app:layout_constraintTop_toTopOf="@+id/ftv_DetailPostback" />
 
         <info.androidhive.fontawesome.FontTextView
-            android:id="@+id/ftv_gamepad"
+            android:id="@+id/ftv_DetailPostback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fa_gamepad_solid"
+            android:text="@string/fa_chevron_left_solid"
             android:textColor="@android:color/darker_gray"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             android:textSize="25dp"

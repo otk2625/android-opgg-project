@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +29,7 @@ public class CommunityFragment extends Fragment {
     private CommunityAdapter communityAdapter;
     private FontTextView ftvPost;
     private static final String TAG = "CommunityFragment";
-
+    private Button button;
 
     @Nullable
     @Override
@@ -57,6 +58,10 @@ public class CommunityFragment extends Fragment {
             at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MakePostFragment()).commit();
         });
 
+        button = view.findViewById(R.id.btn_favorite);
+        button.setOnClickListener(v -> {
+            at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DetailPostFragment()).commit();
+        });
         return view;
     }
 }
