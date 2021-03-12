@@ -3,20 +3,17 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/account"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:icon="@drawable/lol_icon"
             android:title=""
             />
         <item
             android:id="@+id/setting"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/ic_baseline_settings_24"
             android:title=""
             />
         <item
             android:id="@+id/logout"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/ic_baseline_logout_24"
             android:title=""
             />
     </group>
