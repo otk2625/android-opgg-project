@@ -1,6 +1,8 @@
 package com.cos.javagg.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -24,6 +27,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cos.javagg.MainActivity;
 import com.cos.javagg.R;
+import com.cos.javagg.SearchResult;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,7 +40,7 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
     private Vibrator vibrator;
     private ImageButton btn1;
     private Context at;
-
+    private Button btnSearch;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,10 +51,17 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
         //draw = view.findViewById(R.id.draw);
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         btn1=view.findViewById(R.id.img_button);
+        btnSearch = view.findViewById(R.id.btn_search);
 
         InitializeLayout(view);
         //drawL();    // 드로우레이아웃
         lolclick(); // 롤 이미지클릭
+
+        btnSearch.setOnClickListener(v -> {
+            // 화면 이동시!!
+            Intent intent = new Intent(at, SearchResult.class);
+            startActivity(intent);
+        });
 
         return view;
     }
