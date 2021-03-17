@@ -35,27 +35,56 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="80dp"
             android:background="@color/white"
             android:scaleType="fitCenter"
             android:src="@drawable/lol_icon" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/search_searchbar_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintVertical_bias="0.16"
+            tools:layout_editor_absoluteX="0dp">
+
+            <EditText
+                android:id="@+id/et_search_input"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/circle"
+                android:layout_alignParentLeft="true"
+                android:hint="    소환사 검색"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:maxLength="20"
+                android:textAlignment="viewStart"
+                android:textColor="#C5CBD0"
+                android:textColorHint="#9FA6AC" />
+
+            <ImageButton
+                android:id="@+id/iv_search_button"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_search_search_icon" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/circle"
-                android:drawableRight="@drawable/search_24"
-                android:text="    소환사검색"
-                android:textAlignment="viewStart"
-                android:textColor="#C5CBD0"
-                android:textColorLink="@color/gray" />
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
