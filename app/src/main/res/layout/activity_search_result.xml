@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchResult">
+    tools:context=".SearchResultActivity">
 
 
 
@@ -40,11 +40,11 @@
                 android:id="@+id/tv_summornername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="52dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="20dp"
                 android:text="Hide on bush"
                 android:textColor="@color/black"
-                android:textSize="25dp"
+                android:textSize="35dp"
                 app:layout_constraintStart_toEndOf="@+id/profile_image"
                 app:layout_constraintTop_toTopOf="@+id/profile_image" />
 
@@ -83,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="솔랭"
+                    android:layout_marginTop="5dp"
                     android:textColor="#2196F3"
                     app:layout_constraintBottom_toTopOf="@+id/tv_tier"
                     app:layout_constraintStart_toEndOf="@+id/iv_tier"
@@ -113,6 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="270"
+                    android:layout_marginBottom="5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tv_tierpoint"
                     app:layout_constraintTop_toBottomOf="@+id/tv_tierpoint" />
@@ -158,6 +160,9 @@
                 android:layout_height="50dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

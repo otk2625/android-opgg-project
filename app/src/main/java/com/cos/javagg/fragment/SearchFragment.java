@@ -1,26 +1,21 @@
 package com.cos.javagg.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -30,18 +25,17 @@ import androidx.fragment.app.Fragment;
 
 import com.cos.javagg.MainActivity;
 import com.cos.javagg.R;
-import com.cos.javagg.SearchResult;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.cos.javagg.SearchResultActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class SearchFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener
 {
+    private static final String TAG = "SearchFragment";
     //private DrawerLayout mDrawerLayout;
     private DrawerLayout drawLayout;
     private NavigationView navigationView;
-    private ImageButton draw;
+    private ImageButton ibSearchButton, btn1;
     private Vibrator vibrator;
-    private ImageButton btn1, ImageButton;
     private Context at;
     private EditText etSearchName;
     private boolean enterKeyDown;
@@ -58,7 +52,7 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         btn1=view.findViewById(R.id.img_button);
         etSearchName = view.findViewById(R.id.et_search_input);
-        ImageButton = view.findViewById(R.id.iv_search_button);
+        ibSearchButton = view.findViewById(R.id.ib_search_button);
 
         InitializeLayout(view);
         //drawL();    // 드로우레이아웃
@@ -66,9 +60,7 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
 
 
         // 엔터로 검색
-        etSearchName.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
+        etSearchName.setOnKeyListener((v, keyCode, event) -> {
                 if (keyCode == event.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP && !enterKeyUp) {
                     enterKeyUp = true;
                     // 액티비티 이동
@@ -79,26 +71,13 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
                     return true;
                 }
                 return false;
-            }
         });
 
-        etSearchName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                enterKeyUp = false;
-            }
-        });
 
         // 터치로 검색
-        fragmentSearchBinding.ivSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                InputMethodManager imm = (InputMethodManager) getSystemService(getContext());
-
-                // 액티비티 이동
-                moveToNext();
-            }
+        ibSearchButton.setOnClickListener(v -> {
+            enterKeyUp = false;
+            moveToNext();
         });
 
 
@@ -108,11 +87,12 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
     private void moveToNext() {
         if (etSearchName.getText().toString() == null || etSearchName.getText().toString().equals("")) {
 //            Toast.makeText(getContext(), "소환사 이름을 입력하세요", Toast.LENGTH_SHORT).show();
-            Toast toast = Toast.makeText(getContext(), "소환사 이름을 입력하세요", Toast.LENGTH_SHORT);
+            Log.d(TAG, "moveToNext: 실행됨");
+            Toast toast = Toast.makeText(at, "소환사 이름을 입력하세요", Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
-        Intent intent = new Intent(getActivity(), SearchResult.class);
+        Intent intent = new Intent(getActivity(), SearchResultActivity.class);
         intent.putExtra("summonerName", etSearchName.getText().toString());
 //        // 이전화면을 없애고 새화면을 띄운다
 //        intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);

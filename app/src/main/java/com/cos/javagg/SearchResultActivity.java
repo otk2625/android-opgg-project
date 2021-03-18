@@ -1,11 +1,16 @@
 package com.cos.javagg;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +19,7 @@ import com.cos.javagg.adapter.MatchListAdapter;
 import com.cos.javagg.dto.CMRespDto;
 import com.cos.javagg.model.ApiSummoner;
 import com.cos.javagg.service.SummonerApi;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchResult extends AppCompatActivity {
+public class SearchResultActivity extends AppCompatActivity {
     private static final String TAG = "SearchResult";
 
     private ImageView iv1;
@@ -50,6 +56,7 @@ public class SearchResult extends AppCompatActivity {
         loadImages();
 
         infoFindByName();
+        toolbarsetting();
     }
 
     private void findid() {
@@ -97,4 +104,28 @@ public class SearchResult extends AppCompatActivity {
             }
         });
     }
+
+    public void toolbarsetting() {
+        //toolBar를 통해 App Bar 생성
+        Toolbar toolbar = findViewById(R.id.toolbar_search_result);
+        setSupportActionBar(toolbar);
+
+        //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Incon 추가
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

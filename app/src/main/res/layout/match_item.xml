@@ -66,8 +66,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civ_championimg"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_launcher_background"
