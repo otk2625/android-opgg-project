@@ -1,25 +1,25 @@
 package com.cos.javagg;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cos.javagg.adapter.MatchListAdapter;
 import com.cos.javagg.dto.CMRespDto;
-import com.cos.javagg.model.ApiSummoner;
+import com.cos.javagg.dto.LoLDto;
+import com.cos.javagg.model.api.ApiSummoner;
 import com.cos.javagg.service.SummonerApi;
-import com.google.android.material.navigation.NavigationView;
+import com.cos.javagg.task.ProgressTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +39,10 @@ public class SearchResultActivity extends AppCompatActivity {
     private ImageView ivTier;
     private LinearLayoutManager manger;
     private SummonerApi summonerApi;
-    private Call<CMRespDto<ApiSummoner>> call;
-    private TextView tvSummornername;
+    private Call<CMRespDto<LoLDto>> call;
+    private TextView tvSummornername, tvSummonerLevel;
+    private ProgressDialog dialog; //pgb_search_result
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +50,20 @@ public class SearchResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result);
         findid();
 
+        progressBar.setIndeterminate(false);
+        progressBar.setProgress(100);
+        dialog = new ProgressDialog(SearchResultActivity.this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("소환사 정보를 불러오는중 입니다.");
+
+        dialog.show();
+
+
         List<Integer> test = new ArrayList<>();
         test.add(1);
         test.add(2);
 
         adapter(test);
-        loadImages();
 
         infoFindByName();
         toolbarsetting();
@@ -66,13 +76,15 @@ public class SearchResultActivity extends AppCompatActivity {
         summonerApi = SummonerApi.retrofit.create(SummonerApi.class);
         call = summonerApi.getInfo();
         tvSummornername = findViewById(R.id.tv_summornername);
+        tvSummonerLevel = findViewById(R.id.tv_summonerLevel);
+        progressBar = findViewById(R.id.pgb_search_result);
     }
 
-    protected void loadImages() {
+    protected void loadImages(long id) {
         // 이미지뷰 가져오기
         Glide
                 .with(this)
-                .load("http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/4529.png")
+                .load("http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/"+id+".png")
                 .centerCrop()
                 .into(view1);
 
@@ -88,21 +100,31 @@ public class SearchResultActivity extends AppCompatActivity {
 
     public void infoFindByName(){
         Log.d(TAG, "infoFindByName: 실행됨");
-        call.enqueue(new Callback<CMRespDto<ApiSummoner>>() {
+        call.enqueue(new Callback<CMRespDto<LoLDto>>() {
             @Override
-            public void onResponse(Call<CMRespDto<ApiSummoner>> call, Response<CMRespDto<ApiSummoner>> response) {
-                CMRespDto<ApiSummoner> cmRespDto = response.body();
-                ApiSummoner apiSummoner = cmRespDto.getData();
+            public void onResponse(Call<CMRespDto<LoLDto>> call, Response<CMRespDto<LoLDto>> response) {
+                CMRespDto<LoLDto> cmRespDto = response.body();
+
+
+                ApiSummoner apiSummoner = cmRespDto.getData().getApiSummoner();
+                summonerInfoSetting(apiSummoner);
 
                 Log.d(TAG, "onResponse: " + apiSummoner.toString());
-                tvSummornername.setText(apiSummoner.getName());
+
             }
 
             @Override
-            public void onFailure(Call<CMRespDto<ApiSummoner>> call, Throwable t) {
+            public void onFailure(Call<CMRespDto<LoLDto>> call, Throwable t) {
                 Log.d(TAG, "onFailure: 실행 실패" + t.getMessage());
             }
         });
+    }
+
+    private void summonerInfoSetting(ApiSummoner apiSummoner) {
+        tvSummornername.setText(apiSummoner.getName());
+        tvSummonerLevel.setText(apiSummoner.getSummonerLevel()+"");
+
+        loadImages(apiSummoner.getProfileIconId());
     }
 
     public void toolbarsetting() {

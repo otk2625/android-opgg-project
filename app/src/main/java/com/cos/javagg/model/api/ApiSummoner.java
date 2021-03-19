@@ -1,4 +1,4 @@
-package com.cos.javagg.model;
+package com.cos.javagg.model.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

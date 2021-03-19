@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cos.javagg.MatchDetailActivity;
 import com.cos.javagg.R;
 import com.cos.javagg.SearchResultActivity;
-import com.cos.javagg.model.ApiSummoner;
 
 import java.util.List;
 
