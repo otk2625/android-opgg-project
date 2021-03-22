@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,11 +18,12 @@ import com.bumptech.glide.Glide;
 import com.cos.javagg.adapter.MatchListAdapter;
 import com.cos.javagg.dto.CMRespDto;
 import com.cos.javagg.dto.LoLDto;
+import com.cos.javagg.model.api.ApiMatch;
+import com.cos.javagg.model.api.ApiMatchEntry;
 import com.cos.javagg.model.api.ApiSummoner;
+import com.cos.javagg.model.detail.Team;
 import com.cos.javagg.service.SummonerApi;
-import com.cos.javagg.task.ProgressTask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -59,13 +61,13 @@ public class SearchResultActivity extends AppCompatActivity {
         dialog.show();
 
 
-        List<Integer> test = new ArrayList<>();
-        test.add(1);
-        test.add(2);
 
-        adapter(test);
+        Intent intent = getIntent();
+        String summonerName = intent.getStringExtra("summonerName");
+        Log.d(TAG, "onCreate: " + intent.getStringExtra("summonerName"));
+        call = summonerApi.getInfo(summonerName);
 
-        infoFindByName();
+        infoFindByName(summonerName);
         toolbarsetting();
     }
 
@@ -74,7 +76,6 @@ public class SearchResultActivity extends AppCompatActivity {
         rvMatchList = findViewById(R.id.rv_match_list);
         ivTier = findViewById(R.id.iv_tier);
         summonerApi = SummonerApi.retrofit.create(SummonerApi.class);
-        call = summonerApi.getInfo();
         tvSummornername = findViewById(R.id.tv_summornername);
         tvSummonerLevel = findViewById(R.id.tv_summonerLevel);
         progressBar = findViewById(R.id.pgb_search_result);
@@ -91,15 +92,14 @@ public class SearchResultActivity extends AppCompatActivity {
         ivTier.setImageResource(R.drawable.grandmaster);
     }
 
-    public void adapter(List<Integer> test){
+    public void adapter(ApiMatchEntry apiMatchEntry, List<ApiMatch> apiMatch){
         manger = new LinearLayoutManager(this, RecyclerView.VERTICAL,false);
         rvMatchList.setLayoutManager(manger);
-        matchListAdapter = new MatchListAdapter(test);
+        matchListAdapter = new MatchListAdapter(apiMatchEntry, apiMatch);
         rvMatchList.setAdapter(matchListAdapter);
     }
 
-    public void infoFindByName(){
-        Log.d(TAG, "infoFindByName: 실행됨");
+    public void infoFindByName(String summonerName){
         call.enqueue(new Callback<CMRespDto<LoLDto>>() {
             @Override
             public void onResponse(Call<CMRespDto<LoLDto>> call, Response<CMRespDto<LoLDto>> response) {
@@ -109,8 +109,18 @@ public class SearchResultActivity extends AppCompatActivity {
                 ApiSummoner apiSummoner = cmRespDto.getData().getApiSummoner();
                 summonerInfoSetting(apiSummoner);
 
-                Log.d(TAG, "onResponse: " + apiSummoner.toString());
+                ApiMatchEntry apiMatchEntry = cmRespDto.getData().getApiMatchEntry();
+                apiMatchEntry.getMatches().get(0).getChampion();
+                List<ApiMatch> apiMatch = cmRespDto.getData().getApiMatch();
 
+                // 리스트에 어댑터 보내기
+                adapter(apiMatchEntry, apiMatch);
+
+                List<Team> teams = apiMatch.get(0).getTeams();
+
+
+                Log.d(TAG, "onResponse: " + apiSummoner.toString());
+                Log.d(TAG, "onResponse: 승리?" + teams.get(0).getWin());
             }
 
             @Override

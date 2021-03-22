@@ -94,6 +94,7 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
         }
         Intent intent = new Intent(getActivity(), SearchResultActivity.class);
         intent.putExtra("summonerName", etSearchName.getText().toString());
+        Log.d(TAG, "moveToNext: 소환사 이름 : " + etSearchName.getText().toString());
 //        // 이전화면을 없애고 새화면을 띄운다
 //        intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
         etSearchName.setText("");

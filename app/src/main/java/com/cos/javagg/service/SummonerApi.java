@@ -7,15 +7,18 @@ import com.cos.javagg.model.api.ApiSummoner;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface SummonerApi {
 
-    @GET("/info")
-    Call<CMRespDto<LoLDto>> getInfo();
+    @GET("/info/{summonerName}")
+    Call<CMRespDto<LoLDto>> getInfo(@Path(value = "summonerName") String summonerName);
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://113.198.238.68:8080")
+            .baseUrl("http://192.168.25.18:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 

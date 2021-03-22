@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Team {
 
     private long teamId;
-    private String win;
+    private String win; //win, fail
     private boolean firstBlood;
     private boolean firstTower;
     private boolean firstInhibitor;
