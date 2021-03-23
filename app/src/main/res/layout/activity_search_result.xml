@@ -99,15 +99,15 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_launcher_background" />
+                         />
 
                     <TextView
-                        android:id="@+id/textView20"
+                        android:id="@+id/tv_rankType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="5dp"
-                        android:text="솔랭"
+                        android:text="언랭"
                         android:textColor="#2196F3"
                         app:layout_constraintBottom_toTopOf="@+id/tv_tier"
                         app:layout_constraintStart_toEndOf="@+id/iv_tier"
@@ -117,28 +117,36 @@
                         android:id="@+id/tv_tier"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Grandmaster"
+                        android:text="UnRanked"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         app:layout_constraintBottom_toTopOf="@+id/tv_tierpoint"
-                        app:layout_constraintStart_toStartOf="@+id/textView20"
-                        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+                        app:layout_constraintStart_toStartOf="@+id/tv_rankType"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_rankType" />
 
                     <TextView
                         android:id="@+id/tv_tierpoint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="394LP"
+                        android:text="- "
                         app:layout_constraintBottom_toTopOf="@+id/tv_rankwin"
                         app:layout_constraintStart_toStartOf="@+id/tv_tier"
                         app:layout_constraintTop_toBottomOf="@+id/tv_tier" />
+
+                    <TextView
+                        android:id="@+id/tv_lp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" LP"
+                        app:layout_constraintStart_toEndOf="@+id/tv_tierpoint"
+                        app:layout_constraintTop_toTopOf="@+id/tv_tierpoint" />
 
                     <TextView
                         android:id="@+id/tv_rankwin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:text="270"
+                        android:text="- "
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/tv_tierpoint"
                         app:layout_constraintTop_toBottomOf="@+id/tv_tierpoint" />
@@ -156,12 +164,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="247"
+                        android:text="- "
                         app:layout_constraintStart_toEndOf="@+id/textView24"
                         app:layout_constraintTop_toTopOf="@+id/textView24" />
 
                     <TextView
-                        android:id="@+id/textView26"
+                        android:id="@+id/tv_teambaron"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="패"
@@ -169,13 +177,21 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_rankloss" />
 
                     <TextView
-                        android:id="@+id/textView27"
+                        android:id="@+id/tv_odds"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="52"
-                        app:layout_constraintStart_toEndOf="@+id/textView26"
-                        app:layout_constraintTop_toTopOf="@+id/textView26" />
+                        android:text="-"
+                        app:layout_constraintStart_toEndOf="@+id/tv_teambaron"
+                        app:layout_constraintTop_toTopOf="@+id/tv_teambaron" />
+
+                    <TextView
+                        android:id="@+id/tv_persent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" %"
+                        app:layout_constraintStart_toEndOf="@+id/tv_odds"
+                        app:layout_constraintTop_toTopOf="@+id/tv_odds" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -198,7 +214,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_match_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="700dp" />
 
 
     </LinearLayout>

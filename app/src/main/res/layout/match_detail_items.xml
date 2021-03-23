@@ -239,11 +239,11 @@ android:layout_marginBottom="5dp">
         android:hint="0(0)"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_detail_gold"
-        app:layout_constraintEnd_toStartOf="@+id/textView23"
+        app:layout_constraintEnd_toStartOf="@+id/tv_assist_solo"
         app:layout_constraintTop_toTopOf="@+id/iv_detail_gold" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/tv_assist_solo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="2dp"

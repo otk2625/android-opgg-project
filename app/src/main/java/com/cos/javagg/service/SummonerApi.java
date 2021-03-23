@@ -2,6 +2,7 @@ package com.cos.javagg.service;
 
 import com.cos.javagg.dto.CMRespDto;
 import com.cos.javagg.dto.LoLDto;
+import com.cos.javagg.model.api.ApiMatch;
 import com.cos.javagg.model.api.ApiSummoner;
 
 import retrofit2.Call;
@@ -16,6 +17,9 @@ public interface SummonerApi {
 
     @GET("/info/{summonerName}")
     Call<CMRespDto<LoLDto>> getInfo(@Path(value = "summonerName") String summonerName);
+
+    @GET("/match/{matchGameId}")
+    Call<CMRespDto<ApiMatch>> getMatchGameId(@Path(value = "matchGameId") String matchGameId);
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://192.168.25.18:8080")

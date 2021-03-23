@@ -11,15 +11,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cos.javagg.MatchDetailActivity;
 import com.cos.javagg.R;
 import com.cos.javagg.SearchResultActivity;
+import com.cos.javagg.champ.ChampionList;
+import com.cos.javagg.model.detail.Participant;
+import com.cos.javagg.model.detail.ParticipantIdentity;
 
 import java.util.List;
 
 public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetailLossListAdapter.MyViewHolder> {
-    private final List<Integer> matchsSummoner;
+    private final List<Participant> participants;
+    private final List<ParticipantIdentity> participantIdentities;
     private MatchDetailActivity md;
+    private ChampionList championList = new ChampionList();
 
-    public MatchDetailLossListAdapter(List<Integer> matchsSummoner) {
-        this.matchsSummoner = matchsSummoner;
+    public MatchDetailLossListAdapter(List<Participant> participants, List<ParticipantIdentity> participantIdentities, long duration) {
+        this.participants = participants;
+        this.participantIdentities = participantIdentities;
     }
 
     @NonNull
@@ -40,7 +46,7 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
 
     @Override
     public int getItemCount() {
-        return matchsSummoner.size();
+        return participants.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

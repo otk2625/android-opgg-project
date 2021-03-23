@@ -13,11 +13,13 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cos.javagg.adapter.MatchListAdapter;
 import com.cos.javagg.dto.CMRespDto;
 import com.cos.javagg.dto.LoLDto;
+import com.cos.javagg.model.api.ApiEntry;
 import com.cos.javagg.model.api.ApiMatch;
 import com.cos.javagg.model.api.ApiMatchEntry;
 import com.cos.javagg.model.api.ApiSummoner;
@@ -34,7 +36,7 @@ import retrofit2.Response;
 public class SearchResultActivity extends AppCompatActivity {
     private static final String TAG = "SearchResult";
 
-    private ImageView iv1;
+    private ImageView iv_tier;
     private CircleImageView view1;
     private RecyclerView rvMatchList;
     private MatchListAdapter matchListAdapter;
@@ -42,7 +44,7 @@ public class SearchResultActivity extends AppCompatActivity {
     private LinearLayoutManager manger;
     private SummonerApi summonerApi;
     private Call<CMRespDto<LoLDto>> call;
-    private TextView tvSummornername, tvSummonerLevel;
+    private TextView tvSummornername, tvSummonerLevel, tvRankType, tvTier, tvTierPoint, tvRankWin, tvRankLoss, tvOdds, tvPersent;
     private ProgressDialog dialog; //pgb_search_result
     private ProgressBar progressBar;
 
@@ -79,6 +81,16 @@ public class SearchResultActivity extends AppCompatActivity {
         tvSummornername = findViewById(R.id.tv_summornername);
         tvSummonerLevel = findViewById(R.id.tv_summonerLevel);
         progressBar = findViewById(R.id.pgb_search_result);
+
+        //개인 랭크 관련
+        tvRankType = findViewById(R.id.tv_rankType);
+        tvTier = findViewById(R.id.tv_tier);
+        tvTierPoint = findViewById(R.id.tv_tierpoint);
+        tvRankWin = findViewById(R.id.tv_rankwin);
+        tvRankLoss = findViewById(R.id.tv_rankloss);
+        tvOdds = findViewById(R.id.tv_odds);
+        iv_tier =  findViewById(R.id.iv_tier);
+        tvPersent = findViewById(R.id.tv_persent);
     }
 
     protected void loadImages(long id) {
@@ -89,7 +101,7 @@ public class SearchResultActivity extends AppCompatActivity {
                 .centerCrop()
                 .into(view1);
 
-        ivTier.setImageResource(R.drawable.grandmaster);
+        ivTier.setImageResource(R.drawable.unranked);
     }
 
     public void adapter(ApiMatchEntry apiMatchEntry, List<ApiMatch> apiMatch){
@@ -116,11 +128,23 @@ public class SearchResultActivity extends AppCompatActivity {
                 // 리스트에 어댑터 보내기
                 adapter(apiMatchEntry, apiMatch);
 
-                List<Team> teams = apiMatch.get(0).getTeams();
+                //랭크 정보
+                List<ApiEntry> apiEntries = cmRespDto.getData().getApiEntries();
+                Log.d(TAG, "onResponse: apiEntries : " + apiEntries);
+                if (apiEntries.isEmpty() == true){
+                    Toast.makeText(SearchResultActivity.this, "비었다리", Toast.LENGTH_SHORT).show();
+                }else{
+                    rankInfo(apiEntries.get(0));
+                }
+
+//                if (apiEntries == null){
+//                    rankInfo(new ApiEntry());
+//                }else{
+//                    rankInfo(apiEntries.get(0));
+//                }
 
 
-                Log.d(TAG, "onResponse: " + apiSummoner.toString());
-                Log.d(TAG, "onResponse: 승리?" + teams.get(0).getWin());
+
             }
 
             @Override
@@ -135,6 +159,70 @@ public class SearchResultActivity extends AppCompatActivity {
         tvSummonerLevel.setText(apiSummoner.getSummonerLevel()+"");
 
         loadImages(apiSummoner.getProfileIconId());
+    }
+
+    public void rankInfo(ApiEntry apiEntry){
+        if (apiEntry.getQueueType().equals("RANKED_SOLO_5x5")){
+            tvRankType.setText("SOLO RANK");
+        } else{
+            tvRankType.setText("UnRank");
+        }
+
+
+        if(apiEntry.getTier().equals("CHALLENGER")){
+            iv_tier.setImageResource(R.drawable.challenger);
+            tvTier.setText("Challenger");
+            rankSetting(apiEntry);
+        } else if(apiEntry.getTier().equals("GRANDMASTER")){
+            iv_tier.setImageResource(R.drawable.grandmaster);
+            tvTier.setText("Grandmaster");
+            rankSetting(apiEntry);
+        } else if(apiEntry.getTier().equals("MASTER")){
+            iv_tier.setImageResource(R.drawable.master);
+            tvTier.setText("Master");
+            rankSetting(apiEntry);
+        } else if(apiEntry.getTier().equals("DIAMOND")) {
+            iv_tier.setImageResource(R.drawable.diamond);
+            tvTier.setText("Diamond");
+            rankSetting(apiEntry);
+        } else if(apiEntry.getTier().equals("PLATINUM")){
+            iv_tier.setImageResource(R.drawable.platinum);
+            tvTier.setText("Platinum");
+            rankSetting(apiEntry);
+        } else if(apiEntry.getTier().equals("GOLD")){
+            iv_tier.setImageResource(R.drawable.gold);
+            tvTier.setText("Gold");
+            rankSetting(apiEntry);
+        } else if(apiEntry.getTier().equals("SILVER")){
+            iv_tier.setImageResource(R.drawable.silver);
+            tvTier.setText("Silver");
+            rankSetting(apiEntry);
+        } else if(apiEntry.getTier().equals("BRONZE")){
+            iv_tier.setImageResource(R.drawable.bronze);
+            tvTier.setText("Bronze");
+            rankSetting(apiEntry);
+        } else {
+            iv_tier.setImageResource(R.drawable.unranked);
+            tvTier.setText("Unranked");
+            tvTierPoint.setText("-");
+            tvRankWin.setText("-");
+            tvRankLoss.setText("-");
+            tvOdds.setText(" ");
+            tvPersent.setText(" ");
+        }
+
+    }
+
+    public void rankSetting(ApiEntry apiEntry){
+        tvTierPoint.setText(apiEntry.getLeaguePoints()+"");
+        tvRankWin.setText(apiEntry.getWins()+"");
+        tvRankLoss.setText(apiEntry.getLosses()+"");
+
+        int win = (int)apiEntry.getWins();
+        int loss = (int)apiEntry.getLosses();
+        double odd = win*100/(win+loss);
+
+        tvOdds.setText(odd+"");
     }
 
     public void toolbarsetting() {

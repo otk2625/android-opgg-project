@@ -1,5 +1,9 @@
 package com.cos.javagg.champ;
 
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
 public class ChampionList {
 
     // 챔피언 데이터
@@ -307,10 +311,57 @@ public class ChampionList {
             champName = "Yone";
         } else if (champId == 145) {
             champName = "Kaisa";
+        } else if (champId == 777) {
+            champName = "Yone";
         } else{
             champName = "Garen";
         }
 
         return champName;
     }
+
+    //스펠 데이터
+    public String getSpell(String spellId) {
+
+        if(spellId == null || spellId.equals("") || spellId.equals("null")){
+            return "";
+        }
+
+        String spellName = null;
+
+        if (spellId.equals("21")){
+            spellName = "SummonerBarrier";
+        } else if (spellId.equals("1")){
+            spellName = "SummonerBoost";
+        } else if (spellId.equals("14")){
+            spellName = "SummonerDot";
+        } else if (spellId.equals("3")){
+            spellName = "SummonerExhaust";
+        } else if (spellId.equals("4")){
+            spellName = "SummonerFlash";
+        } else if (spellId.equals("6")){
+            spellName = "SummonerHaste";
+        } else if (spellId.equals("7")){
+            spellName = "SummonerHeal";
+        } else if (spellId.equals("13")){
+            spellName = "SummonerMana";
+        } else if (spellId.equals("30")){
+            spellName = "SummonerPoroRecall";
+        } else if (spellId.equals("31")){
+            spellName = "SummonerPoroThrow";
+        } else if (spellId.equals("11")){
+            spellName = "SummonerSmite";
+        } else if (spellId.equals("39")){
+            spellName = "SummonerSnowURFSnowball_Mark";
+        } else if (spellId.equals("32")){
+            spellName = "SummonerSnowball";
+        } else if (spellId.equals("12")){
+            spellName = "SummonerTeleport";
+        }
+
+        return spellName;
+    }
+
+
+
 }
