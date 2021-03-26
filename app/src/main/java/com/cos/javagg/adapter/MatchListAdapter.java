@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.cos.javagg.MatchDetailActivity;
 import com.cos.javagg.R;
 import com.cos.javagg.SearchResultActivity;
+import com.cos.javagg.champ.Calcu;
 import com.cos.javagg.champ.ChampionList;
 import com.cos.javagg.model.api.ApiMatch;
 import com.cos.javagg.model.api.ApiMatchEntry;
@@ -35,6 +36,7 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.MyVi
     private SearchResultActivity sr;
     private ChampionList championList = new ChampionList();
     private String queueType; //420솔랭, 430일반, 440무작위
+
 
 
     public MatchListAdapter(ApiMatchEntry apiMatchEntry, List<ApiMatch> apiMatches) {
@@ -66,7 +68,7 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView tvWinOrLoss, tvKillSolo, tvDeathSolo, tvAssistSolo, tvGameType;
+        private TextView tvWinOrLoss, tvKillSolo, tvDeathSolo, tvAssistSolo, tvGameType, tv_timestamp, tv_game_cration;
         private String champKey, spell1, spell2, item1,item2,item3,item4,item5,item6, item0,ChampionId = "";
         private CircleImageView civChampionimg;
         private ImageView ivSpell1, ivSpell2, tvItem0,tvItem1,tvItem2,tvItem3,tvItem4,tvItem5,tvItem6;
@@ -109,9 +111,16 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.MyVi
             tvItem5 = itemView.findViewById(R.id.iv_item5);
             tvItem6 = itemView.findViewById(R.id.iv_item6);
             tvGameType = itemView.findViewById(R.id.tv_game_type);
+            tv_timestamp = itemView.findViewById(R.id.tv_timestamp);
+            tv_game_cration = itemView.findViewById(R.id.tv_game_cration);
         }
 
         public void setItem(ApiMatch apiMatch){
+            //시간 duration
+            tv_timestamp.setText(Calcu.getDuration(apiMatch.getGameDuration()));
+            tv_game_cration.setText(Calcu.getCreation2(apiMatch.getGameCreation()));
+
+
 
             //매치 리스트에 보여줄 챔피온 id값 구하기
             for(int i = 0; i< apiMatches.size(); i++){
@@ -204,7 +213,6 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.MyVi
 
         public void itemImages(String itemImage, ImageView imageView) {
             if(itemImage.isEmpty() == true){
-                imageView.setBackgroundColor(Color.parseColor("#C5CBD0"));
                 Log.d(TAG, "itemImages: null값 있음");
             }else{
                 // 이미지뷰 가져오기

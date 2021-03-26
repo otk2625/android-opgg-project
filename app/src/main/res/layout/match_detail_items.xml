@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginBottom="5dp">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp">
     >
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/layout_detail_color"
@@ -34,7 +34,7 @@ android:layout_marginBottom="5dp">
         android:background="@drawable/radius_button_black"
         android:hint="0"
         android:textColor="#FFFFFF"
-        android:textSize="8sp"
+        android:textSize="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -167,7 +167,7 @@ android:layout_marginBottom="5dp">
         android:layout_height="19dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="2dp"
-        android:src="@drawable/ic_launcher_background"
+        android:background="@color/noItem"
         app:layout_constraintEnd_toStartOf="@+id/iv_detail_item1"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -177,7 +177,7 @@ android:layout_marginBottom="5dp">
         android:layout_height="19dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="2dp"
-        android:src="@drawable/ic_launcher_background"
+        android:background="@color/noItem"
         app:layout_constraintEnd_toStartOf="@+id/iv_detail_item2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -187,7 +187,7 @@ android:layout_marginBottom="5dp">
         android:layout_height="19dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="2dp"
-        android:src="@drawable/ic_launcher_background"
+        android:background="@color/noItem"
         app:layout_constraintEnd_toStartOf="@+id/iv_detail_item3"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -197,7 +197,7 @@ android:layout_marginBottom="5dp">
         android:layout_height="19dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="2dp"
-        android:src="@drawable/ic_launcher_background"
+        android:background="@color/noItem"
         app:layout_constraintEnd_toStartOf="@+id/iv_detail_item4"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -207,7 +207,7 @@ android:layout_marginBottom="5dp">
         android:layout_height="19dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="2dp"
-        android:src="@drawable/ic_launcher_background"
+        android:background="@color/noItem"
         app:layout_constraintEnd_toStartOf="@+id/iv_detail_item5"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -217,7 +217,7 @@ android:layout_marginBottom="5dp">
         android:layout_height="19dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="2dp"
-        android:src="@drawable/ic_launcher_background"
+        android:background="@color/noItem"
         app:layout_constraintEnd_toStartOf="@+id/iv_detail_item6"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -227,7 +227,7 @@ android:layout_marginBottom="5dp">
         android:layout_height="19dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="5dp"
-        android:src="@drawable/ic_launcher_background"
+        android:background="@color/noItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

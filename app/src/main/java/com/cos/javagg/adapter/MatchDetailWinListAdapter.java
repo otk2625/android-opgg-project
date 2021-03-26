@@ -122,6 +122,10 @@ public class MatchDetailWinListAdapter extends RecyclerView.Adapter<MatchDetailW
             //레벨
             iv_detail_champ_level.setText(participant.getStats().getChampLevel()+"");
 
+            //특성
+            getPerk(participant.getStats().getPerkPrimaryStyle()+"", iv_detail_perk1);
+            getPerk(participant.getStats().getPerkSubStyle()+"", iv_detail_perk2);
+
         }
 
         public void findById(View itemView){
@@ -177,7 +181,7 @@ public class MatchDetailWinListAdapter extends RecyclerView.Adapter<MatchDetailW
 
         public void itemImages(String itemImage, ImageView imageView) {
             if(itemImage.equals("0")){
-                imageView.setBackgroundColor(Color.parseColor("#C5CBD0"));
+
                 Log.d(TAG, "itemImages: null값 있음");
             }else{
                 // 이미지뷰 가져오기
@@ -189,5 +193,14 @@ public class MatchDetailWinListAdapter extends RecyclerView.Adapter<MatchDetailW
             }
 
         }
+        public void getPerk(String perk, ImageView imageView){
+            Glide
+                    .with(md)
+                    .load("https://opgg-static.akamaized.net/images/lol/perkStyle/" + perk + ".png")
+                    .centerCrop()
+                    .into(imageView);
+        }
+
+
     }
 }

@@ -8,16 +8,12 @@
     tools:context=".MatchDetailActivity"
     >
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".view.DetailActivity">
+        android:orientation="vertical">
 
 
 
@@ -78,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="right"
-                android:text="평균 티어   "
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="@+id/tv_detail_header_queuetype"
@@ -89,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:text="GrandMaster"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="15dp"
                 app:layout_constraintStart_toEndOf="@+id/zzzzzzz"
@@ -328,6 +324,7 @@
             android:id="@+id/rv_detail_win"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"
             android:orientation="vertical" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -507,11 +504,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_detail_lose"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="290dp"
+            android:nestedScrollingEnabled="false"
             android:orientation="vertical" />
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </ScrollView>

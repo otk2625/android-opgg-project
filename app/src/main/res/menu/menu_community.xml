@@ -8,10 +8,7 @@
         android:id="@+id/bottom_community"
         android:title="커뮤니티"
         android:icon="@drawable/ic_glyph_solid_users"/>
-    <item
-        android:id="@+id/bottom_champion"
-        android:title="챔피언"
-        android:icon="@drawable/ic_glyph_brands_bitcoin"/>
+
     <item
         android:id="@+id/bottom_ranking"
         android:title="랭킹"

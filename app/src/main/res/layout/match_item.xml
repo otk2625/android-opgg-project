@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -102,7 +103,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cl_win_or_loss"
         app:layout_constraintTop_toBottomOf="@+id/civ_championimg"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:background="@color/noItem" />
 
     <ImageView
         android:id="@+id/iv_item1"
@@ -112,7 +113,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/iv_item0"
         app:layout_constraintTop_toTopOf="@+id/iv_item0"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:background="@color/noItem" />
 
     <ImageView
         android:id="@+id/iv_item2"
@@ -122,7 +123,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/iv_item1"
         app:layout_constraintTop_toTopOf="@+id/iv_item1"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:background="@color/noItem" />
 
     <ImageView
         android:id="@+id/iv_item3"
@@ -132,7 +133,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/iv_item2"
         app:layout_constraintTop_toTopOf="@+id/iv_item2"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:background="@color/noItem" />
 
     <ImageView
         android:id="@+id/iv_item4"
@@ -142,7 +143,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/iv_item3"
         app:layout_constraintTop_toTopOf="@+id/iv_item3"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:background="@color/noItem" />
 
     <ImageView
         android:id="@+id/iv_item5"
@@ -152,7 +153,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/iv_item4"
         app:layout_constraintTop_toTopOf="@+id/iv_item4"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:background="@color/noItem" />
 
     <ImageView
         android:id="@+id/iv_item6"
@@ -162,7 +163,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/iv_item5"
         app:layout_constraintTop_toTopOf="@+id/iv_item5"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:background="@color/noItem" />
 
     <TextView
         android:id="@+id/tv_kill_solo"
@@ -234,7 +235,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.504" />
+        app:layout_constraintVertical_bias="0.356" />
+
+    <TextView
+        android:id="@+id/tv_game_cration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7 시간전"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_game_type"
+        app:layout_constraintTop_toBottomOf="@+id/tv_game_type"
+        app:layout_constraintVertical_bias="0.239" />
 
     <View
         android:layout_width="match_parent"

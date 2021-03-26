@@ -44,7 +44,7 @@ public class MatchDetailActivity extends AppCompatActivity {
     private ConstraintLayout layoutDetailHeader2;
     private TextView tvDetailHeaderWinOrLose, tvDetailWinTeamKill, tvDetailWinTeamDeath, tvDetailWinTeamAssist, tvTeamBaron,
             tvTeamDragon, tvTeamPotop, tvDetailLoseTeamKill, tvDetailLoseTeamDeath, tvDetailLoseTeamAssist, tvTeamLossBaron,
-            tvTeamLoseDragon, tvTeamLosePotop, tv_detail_header_queuetype, tv_detail_header_duration;
+            tvTeamLoseDragon, tvTeamLosePotop, tv_detail_header_queuetype, tv_detail_header_duration, tv_detail_header_createdate;
     private List<Participant> winTeamList;
     private List<Participant> loseTeamList;
     private ParticipantIdentity participantIdentity;
@@ -81,6 +81,7 @@ public class MatchDetailActivity extends AppCompatActivity {
         layoutDetailHeader1 = findViewById(R.id.layout_detail_header1);
         tv_detail_header_queuetype = findViewById(R.id.tv_detail_header_queuetype);
         tv_detail_header_duration = findViewById(R.id.tv_detail_header_duration);
+        tv_detail_header_createdate = findViewById(R.id.tv_detail_header_createdate);
         //팀 게임 정보
         //승리팀
         tvDetailWinTeamKill = findViewById(R.id.tv_detail_win_team_kill);
@@ -140,7 +141,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                 tv_detail_header_duration.setText(Calcu.getDuration(duration));
 
                 long gameCreation = apiMatch.getGameCreation();
-
+                tv_detail_header_createdate.setText(Calcu.getCreation(gameCreation));
 
                 for(int i = 0; i<apiMatch.getParticipants().size(); i++){
                     String temp = apiMatch.getParticipants().get(i).getChampionId()+"";
@@ -180,12 +181,34 @@ public class MatchDetailActivity extends AppCompatActivity {
                     //이긴팀 리스트 담기
                     if(temp.equals(teamId)){
                         winTeamList.add(apiMatch.getParticipants().get(i));
-                    } else {
+                    } else {//진팀
                         loseTeamList.add(apiMatch.getParticipants().get(i));
                     }
                 }
 
                 List<ParticipantIdentity> participantIdentities = apiMatch.getParticipantIdentities();
+
+                long teamKills= 0L , teamDeaths= 0L, teamAssists = 0L;
+
+                //이긴팀 총 킬뎃어시
+                for(int i = 0; i<winTeamList.size(); i++) {
+                    teamKills += winTeamList.get(i).getStats().getKills();
+                    teamDeaths += winTeamList.get(i).getStats().getDeaths();
+                    teamAssists += winTeamList.get(i).getStats().getAssists();
+                }
+                tvDetailWinTeamKill.setText(teamKills+"");
+                tvDetailWinTeamDeath.setText(teamDeaths+"");
+                tvDetailWinTeamAssist.setText(teamAssists+"");
+
+                //진팀
+                for(int i = 0; i<loseTeamList.size(); i++) {
+                    teamKills += loseTeamList.get(i).getStats().getKills();
+                    teamDeaths += loseTeamList.get(i).getStats().getDeaths();
+                    teamAssists += loseTeamList.get(i).getStats().getAssists();
+                }
+                tvDetailLoseTeamKill.setText(teamKills+"");
+                tvDetailLoseTeamDeath.setText(teamDeaths+"");
+                tvDetailLoseTeamAssist.setText(teamAssists+"");
 
 
                 //각 어댑터에 보내기

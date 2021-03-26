@@ -77,13 +77,14 @@
             android:layout_marginBottom="30dp"
             android:gravity="right"/>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
+            android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:backgroundTint="#03A9F4"
-            android:textSize="20dp"
             android:layout_marginBottom="10dp"
-            android:text="로그인"/>
+            android:backgroundTint="#03A9F4"
+            android:text="로그인"
+            android:textSize="20dp" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

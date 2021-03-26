@@ -51,9 +51,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                 case R.id.bottom_community :
                     selectedFragment = new CommunityFragment();
                     break;
-                case R.id.bottom_champion :
-                    selectedFragment = new ChampionFragment();
-                    break;
                 case R.id.bottom_ranking :
                     selectedFragment = new RankingFragment();
                     break;

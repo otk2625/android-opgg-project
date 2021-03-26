@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -45,7 +46,7 @@ public class SearchResultActivity extends AppCompatActivity {
     private SummonerApi summonerApi;
     private Call<CMRespDto<LoLDto>> call;
     private TextView tvSummornername, tvSummonerLevel, tvRankType, tvTier, tvTierPoint, tvRankWin, tvRankLoss, tvOdds, tvPersent;
-    private ProgressDialog dialog; //pgb_search_result
+
     private ProgressBar progressBar;
 
     @Override
@@ -56,11 +57,9 @@ public class SearchResultActivity extends AppCompatActivity {
 
         progressBar.setIndeterminate(false);
         progressBar.setProgress(100);
-        dialog = new ProgressDialog(SearchResultActivity.this);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("소환사 정보를 불러오는중 입니다.");
 
-        dialog.show();
+        CheckTypesTask task = new CheckTypesTask();
+        task.execute();
 
 
 
@@ -71,6 +70,9 @@ public class SearchResultActivity extends AppCompatActivity {
 
         infoFindByName(summonerName);
         toolbarsetting();
+
+
+
     }
 
     private void findid() {
@@ -81,6 +83,7 @@ public class SearchResultActivity extends AppCompatActivity {
         tvSummornername = findViewById(R.id.tv_summornername);
         tvSummonerLevel = findViewById(R.id.tv_summonerLevel);
         progressBar = findViewById(R.id.pgb_search_result);
+
 
         //개인 랭크 관련
         tvRankType = findViewById(R.id.tv_rankType);
@@ -136,6 +139,9 @@ public class SearchResultActivity extends AppCompatActivity {
                 }else{
                     rankInfo(apiEntries.get(0));
                 }
+
+
+
 
 //                if (apiEntries == null){
 //                    rankInfo(new ApiEntry());
@@ -246,6 +252,39 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public class CheckTypesTask extends AsyncTask<Void,Void,Void>{
+        private ProgressDialog dialog = new ProgressDialog(SearchResultActivity.this); //pgb_search_result
+
+        @Override
+        protected void onPreExecute() {
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("소환사 정보를 불러오는중 입니다.");
+
+            dialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+           try {
+
+               for (int i =0; i< 5; i++){
+                   Thread.sleep(1000);
+               }
+
+           } catch (InterruptedException e){
+               e.printStackTrace();
+           }
+           return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            dialog.dismiss();
+            super.onPostExecute(aVoid);
+        }
     }
 
 }

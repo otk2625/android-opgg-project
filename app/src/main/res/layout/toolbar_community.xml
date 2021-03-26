@@ -15,7 +15,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="55dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         >
@@ -27,8 +27,8 @@
             android:gravity="center"
             android:text="커뮤니티"
             android:textColor="@color/black"
-            android:textSize="25dp"
-            app:layout_constraintEnd_toStartOf="@+id/ftv_bars"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/ftv_login"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/ftv_gamepad"
             app:layout_constraintTop_toTopOf="@+id/ftv_gamepad" />
@@ -49,10 +49,10 @@
             app:solid_icon="true" />
 
         <info.androidhive.fontawesome.FontTextView
-            android:id="@+id/ftv_bars"
+            android:id="@+id/ftv_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fa_bars_solid"
+            android:text="@string/fa_user_circle"
             android:textColor="@android:color/darker_gray"
             android:textSize="25dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +70,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="55dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 

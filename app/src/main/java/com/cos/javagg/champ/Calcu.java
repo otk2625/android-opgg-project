@@ -96,4 +96,24 @@ public class Calcu {
         return creationString;
     }
 
+    public static String getCreation2(long creation) {
+
+        if(creation + 86400000 > System.currentTimeMillis()){
+            long temp = System.currentTimeMillis() - creation;
+            if(temp < 60000){
+                return temp/1000+"초 전";
+            } else if(temp < 3600000){
+                return temp/60000+"분 전";
+            } else{
+                return temp/3600000+"시간 전";
+            }
+        }
+
+        Date date = new Date(creation);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        String creationString = sdf.format(date);
+
+        return creationString;
+    }
+
 }
