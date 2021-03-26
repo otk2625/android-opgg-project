@@ -67,6 +67,7 @@ public class CommunityFragment extends Fragment {
         rvPostList = (RecyclerView) view.findViewById(R.id.rv_post_list);
         ftvPost = view.findViewById(R.id.ftv_post);
         button = view.findViewById(R.id.btn_favorite);
+        ftv_login = view.findViewById(R.id.ftv_login);
     }
 
     public void listen(MainActivity at){
@@ -79,6 +80,8 @@ public class CommunityFragment extends Fragment {
         });
 
         ftv_login.setOnClickListener(v-> {
+
+
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         });
