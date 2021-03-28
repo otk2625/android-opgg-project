@@ -129,8 +129,10 @@ public class LoginActivity extends AppCompatActivity {
                            User user = cmRespDto.getData();
                            newIntent.putExtra("auth",gson.toJson(user));
 
-
+                           startActivity(newIntent);
                            finish();
+                       } else{
+                           Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호를 확인해 주세종", Toast.LENGTH_SHORT).show();
                        }
                     }
 

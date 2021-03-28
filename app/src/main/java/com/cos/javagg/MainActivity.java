@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     private static final String TAG = "MainActivity2";
     private Context mContext = MainActivity.this;
     private BottomNavigationView bottomNavigationView;
-    private static User loginUser;
+    public static User loginUser;
 
 
     @Override
