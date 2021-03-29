@@ -1,4 +1,4 @@
-package com.cos.javagg.model.post;
+package com.cos.javagg.model.board;
 
 import com.cos.javagg.model.reply.Reply;
 import com.cos.javagg.model.user.User;
@@ -13,13 +13,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Post {
+public class Board {
     private Integer id;
+
+    private String communityType;
+
+
     private String title;
+
     private String content;
-    private User user;
+
+    private int readCount;
+
     private int likeCount;
-    private int viewCount;
+
+    private int dislikeCount;
+
+    private User user;
+
     private List<Reply> replys;
+
     private Timestamp createDate;
 }

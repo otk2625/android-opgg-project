@@ -16,12 +16,12 @@
         android:text="@string/fa_caret_up_solid"
         android:textColor="@android:color/darker_gray"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toTopOf="@+id/tv_postlikecount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_postlikecount"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -40,7 +40,7 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_postlikecount" />
 
     <View
         android:layout_width="match_parent"

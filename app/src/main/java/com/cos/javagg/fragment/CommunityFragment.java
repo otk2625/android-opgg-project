@@ -1,9 +1,7 @@
 package com.cos.javagg.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cos.javagg.LoginActivity;
 import com.cos.javagg.MainActivity;
 import com.cos.javagg.R;
-import com.cos.javagg.SearchResultActivity;
 import com.cos.javagg.adapter.CommunityAdapter;
+import com.cos.javagg.dto.CMRespDto;
+import com.cos.javagg.model.board.Board;
+import com.cos.javagg.service.CommunityApi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import info.androidhive.fontawesome.FontTextView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CommunityFragment extends Fragment {
     private RecyclerView rvPostList;
@@ -35,30 +37,51 @@ public class CommunityFragment extends Fragment {
     private static final String TAG = "CommunityFragment";
     private Button button;
 
+    private CommunityApi communityApi;
+    private Call<CMRespDto<List<Board>>> call;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         MainActivity at = (MainActivity)container.getContext();
 
         View view = inflater.inflate(R.layout.fragment_community,container,false);
+        init(view);
 
         //어댑터 처리
-        List<Integer> posts = new ArrayList<>();
+//        List<Integer> posts = new ArrayList<>();
+//
+//        for (int i=0; i<20; i++){
+//            posts.add(i);
+//        }
 
-        for (int i=0; i<20; i++){
-            posts.add(i);
-        }
-        init(view);
+
+        communityApi = CommunityApi.retrofit.create(CommunityApi.class);
+        call = communityApi.findAll();
+
+        call.enqueue(new Callback<CMRespDto<List<Board>>>() {
+            @Override
+            public void onResponse(Call<CMRespDto<List<Board>>> call, Response<CMRespDto<List<Board>>> response) {
+                CMRespDto<List<Board>> cmRespDto = response.body();
+                List<Board> posts = cmRespDto.getData();
+
+                //여기서 어댑터 전달
+                communityAdapter = new CommunityAdapter(posts);
+                postLayoutManager = new LinearLayoutManager(getActivity());
+
+                rvPostList.setLayoutManager(postLayoutManager);
+                rvPostList.setAdapter(communityAdapter);
+
+            }
+
+            @Override
+            public void onFailure(Call<CMRespDto<List<Board>>> call, Throwable t) {
+
+            }
+        });
+
+
         listen(at);
-
-        postLayoutManager = new LinearLayoutManager(getActivity());
-        communityAdapter = new CommunityAdapter(posts);
-
-
-
-        rvPostList.setLayoutManager(postLayoutManager);
-        rvPostList.setAdapter(communityAdapter);
-
 
 
         return view;

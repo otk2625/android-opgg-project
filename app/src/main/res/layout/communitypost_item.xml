@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_postlikecount"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -65,12 +65,12 @@
         android:layout_marginBottom="16dp"
         android:text="6시간 전"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_posthoursago2"
+        app:layout_constraintEnd_toStartOf="@+id/tv_postusername"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_postkinds" />
 
     <TextView
-        android:id="@+id/tv_posthoursago2"
+        android:id="@+id/tv_postusername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
@@ -103,7 +103,7 @@
         app:layout_constraintGuide_begin="308dp" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_postimage"
         android:layout_width="80dp"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
