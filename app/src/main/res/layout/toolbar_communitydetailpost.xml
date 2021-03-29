@@ -7,7 +7,7 @@
     android:background="@color/white"
 
     android:layout_width="match_parent"
-    android:layout_height="65dp">
+    android:layout_height="55dp">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,7 +27,7 @@
             android:gravity="center"
             android:text="커뮤니티"
             android:textColor="@color/black"
-            android:textSize="25dp"
+            android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@+id/ftv_login"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/ftv_DetailPostback"

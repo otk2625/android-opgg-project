@@ -10,7 +10,7 @@
         android:id="@+id/fontTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:text="@string/fa_caret_up_solid"
 
         android:textColor="@android:color/darker_gray"
@@ -18,7 +18,8 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:solid_icon="true" />
 
     <TextView
         android:id="@+id/tv_postlikecount"
@@ -67,7 +68,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_postusername"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_postkinds" />
+        app:layout_constraintStart_toEndOf="@+id/tv_postkinds"
+        app:layout_constraintTop_toTopOf="@+id/tv_postkinds" />
 
     <TextView
         android:id="@+id/tv_postusername"
@@ -106,8 +108,7 @@
         android:id="@+id/iv_postimage"
         android:layout_width="80dp"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

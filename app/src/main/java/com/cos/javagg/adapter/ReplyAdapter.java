@@ -41,7 +41,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        return 1;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

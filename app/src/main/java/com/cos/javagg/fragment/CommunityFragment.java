@@ -96,7 +96,12 @@ public class CommunityFragment extends Fragment {
 
     public void listen(MainActivity at){
         ftvPost.setOnClickListener(v -> {
-            at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MakePostFragment()).commit();
+            if(at.loginUser == null){
+                Toast.makeText(at, "로그인이 필요한 서비스입니다", Toast.LENGTH_SHORT).show();
+            } else{
+                at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MakePostFragment()).commit();
+            }
+
         });
 
         button.setOnClickListener(v -> {

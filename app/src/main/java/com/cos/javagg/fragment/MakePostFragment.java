@@ -39,10 +39,13 @@ public class MakePostFragment extends Fragment {
     private Call<CMRespDto<String>> call;
     private Button btn_postsave;
     private BoardDto postDto;
+    private  MainActivity at;
+
+    public String postKinds = ""; //자유, 유머, 영상, 팁과 노하우
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MainActivity at = (MainActivity)container.getContext();
+        at = (MainActivity)container.getContext();
 
         View view = inflater.inflate(R.layout.fragment_makepost,container,false);
 
@@ -68,6 +71,7 @@ public class MakePostFragment extends Fragment {
             if(et_title.getText().toString().length() != 0 && summernote.getText().toString().length() != 0){
                 postDto.setTitle(et_title.getText()+"");
                 postDto.setContent(summernote.getText());
+                postDto.setCommunityType(postKinds);
 
                 call = communityApi.save(at.loginUser.getId(),postDto);
 
@@ -77,6 +81,7 @@ public class MakePostFragment extends Fragment {
                         CMRespDto<String> cmRespDto = response.body();
                         if(cmRespDto.getResultCode() == 1){
                             at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommunityFragment()).commit();
+                            Log.d(TAG, "onResponse: 이거 값 뭐나올까 : " + postKinds);
                             Toast.makeText(at, "게시물 저장 완료", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -122,6 +127,8 @@ public class MakePostFragment extends Fragment {
                 if(spinner_field.getSelectedItemPosition() > 0){
                     //선택된 항목
                     Log.v("알림",spinner_field.getSelectedItem().toString()+ "is selected");
+                    Toast.makeText(at, "이게 뭘까 : " + spinner_field.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                    postKinds = spinner_field.getSelectedItem().toString();
                 }
             }
             @Override

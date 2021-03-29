@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -31,7 +33,7 @@ public class JoinActivity extends AppCompatActivity {
     private ImageButton join_close;
     private EditText et_email, et_username, et_password;
     private LoginActivity loginActivity;
-
+    private static boolean isJoin = false;
     public JoinActivity() {
     }
 
@@ -43,7 +45,7 @@ public class JoinActivity extends AppCompatActivity {
         findById();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://113.198.238.68:8080")
+                .baseUrl("http://192.168.25.18:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -93,7 +95,10 @@ public class JoinActivity extends AppCompatActivity {
                             Toast.makeText(JoinActivity.this, "아이디 중복", Toast.LENGTH_SHORT).show();
                         }
 
+                        isJoin = true;
+
                         finish();
+
                     }
 
                     @Override
@@ -108,5 +113,19 @@ public class JoinActivity extends AppCompatActivity {
         });
 
 
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+
+        if(isJoin == true){
+            Toast.makeText((LoginActivity)loginActivity.mContext, "회원가입 성공", Toast.LENGTH_SHORT).show();
+            isJoin = false;
+        }
+
+    }
+
 }

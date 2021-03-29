@@ -18,7 +18,6 @@ public class Board {
 
     private String communityType;
 
-
     private String title;
 
     private String content;

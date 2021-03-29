@@ -123,6 +123,10 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
             //레벨
             iv_detail_champ_level.setText(participant.getStats().getChampLevel()+"");
 
+            //특성
+            getPerk(participant.getStats().getPerkPrimaryStyle()+"", iv_detail_perk1);
+            getPerk(participant.getStats().getPerkSubStyle()+"", iv_detail_perk2);
+
         }
 
         public void findById(View itemView){
@@ -189,6 +193,13 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
                         .into(imageView);
             }
 
+        }
+        public void getPerk(String perk, ImageView imageView){
+            Glide
+                    .with(md)
+                    .load("https://opgg-static.akamaized.net/images/lol/perkStyle/" + perk + ".png")
+                    .centerCrop()
+                    .into(imageView);
         }
     }
 }

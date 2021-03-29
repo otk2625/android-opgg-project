@@ -53,7 +53,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView tv_title, tv_postkinds, tv_posthoursago, tv_postusername;
+        private TextView tv_title, tv_postkinds, tv_posthoursago, tv_postusername, tv_postlikecount;
         private ImageView iv_postimage;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -74,13 +74,15 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             tv_posthoursago = itemView.findViewById(R.id.tv_posthoursago);
             tv_postusername = itemView.findViewById(R.id.tv_postusername);
             iv_postimage = itemView.findViewById(R.id.iv_postimage);
+            tv_postlikecount = itemView.findViewById(R.id.tv_postlikecount);
         }
 
         public void setItem(Board post) {
             tv_title.setText(post.getTitle());
-            tv_postkinds.setText("아직일반");
+            tv_postkinds.setText(post.getCommunityType());
             tv_posthoursago.setText(Calcu.getDate(post.getCreateDate()));
             tv_postusername.setText(post.getUser().getUsername());
+            tv_postlikecount.setText(post.getLikeCount()+"");
         }
     }
 }
