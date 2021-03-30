@@ -2,6 +2,7 @@ package com.cos.javagg.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +23,7 @@ import com.cos.javagg.adapter.CommunityAdapter;
 import com.cos.javagg.dto.CMRespDto;
 import com.cos.javagg.model.board.Board;
 import com.cos.javagg.service.CommunityApi;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
@@ -32,6 +35,8 @@ import retrofit2.Response;
 public class CommunityFragment extends Fragment {
     private RecyclerView rvPostList;
     private RecyclerView.LayoutManager postLayoutManager;
+    private DrawerLayout dl_community;
+    private NavigationView nv_community;
     private CommunityAdapter communityAdapter;
     private FontTextView ftvPost, ftv_login;
     private static final String TAG = "CommunityFragment";
@@ -92,6 +97,9 @@ public class CommunityFragment extends Fragment {
         ftvPost = view.findViewById(R.id.ftv_post);
         button = view.findViewById(R.id.btn_favorite);
         ftv_login = view.findViewById(R.id.ftv_login);
+
+        dl_community = (DrawerLayout) view.findViewById(R.id.dl_community);
+        nv_community = (NavigationView) view.findViewById(R.id.nv_community);
     }
 
     public void listen(MainActivity at){
@@ -110,13 +118,15 @@ public class CommunityFragment extends Fragment {
 
         ftv_login.setOnClickListener(v-> {
 
-            if (at.loginUser == null){
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(at, "현재 로그인중인 사람은 : " + at.loginUser.getUsername(), Toast.LENGTH_SHORT).show();
-            }
+            //로그인 Intent
+//            if (at.loginUser == null){
+//                Intent intent = new Intent(getActivity(), LoginActivity.class);
+//                startActivity(intent);
+//            } else {
+//                Toast.makeText(at, "현재 로그인중인 사람은 : " + at.loginUser.getUsername(), Toast.LENGTH_SHORT).show();
+//            }
 
+            dl_community.openDrawer(Gravity.RIGHT);
 
         });
     }

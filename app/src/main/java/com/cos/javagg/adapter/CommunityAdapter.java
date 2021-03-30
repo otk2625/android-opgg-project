@@ -1,6 +1,7 @@
 package com.cos.javagg.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.cos.javagg.service.CommunityApi;
 
 import java.util.List;
 
+import info.androidhive.fontawesome.FontTextView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,13 +68,20 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         private TextView tv_title, tv_postkinds, tv_posthoursago, tv_postusername, tv_postlikecount;
         private ImageView iv_postimage;
         private Board board;
+        private FontTextView ftv_likebtn;
+        private boolean togle = false;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             findById(itemView);
 
+            listener(itemView);
 
+
+        }
+
+        private void listener(View itemView) {
             itemView.setOnClickListener(view -> {
                 Toast.makeText(view.getContext(), "이동됨", Toast.LENGTH_SHORT).show();
 
@@ -97,6 +106,18 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 });
 
             });
+
+            //좋아요 클릭하면
+            ftv_likebtn.setOnClickListener(view -> {
+                if (togle == false){
+                    ftv_likebtn.setTextColor(Color.GREEN);
+                    togle = true;
+                }else{
+                    ftv_likebtn.setTextColor(Color.rgb(170,170,170));
+                    togle = false;
+                }
+
+            });
         }
 
         private void findById(View itemView) {
@@ -106,6 +127,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             tv_postusername = itemView.findViewById(R.id.tv_postusername);
             iv_postimage = itemView.findViewById(R.id.iv_postimage);
             tv_postlikecount = itemView.findViewById(R.id.tv_reply_likecount);
+
+            ftv_likebtn = itemView.findViewById(R.id.ftv_likebtn);
         }
 
         public void setItem(Board post) {

@@ -49,7 +49,7 @@ public class DetailPostFragment  extends Fragment {
     private Button btn_delete, btn_update, btn_replysave;
     private  MainActivity at;
     private TextView tv_detail_title, tv_detail_createdate, tv_detail_username, tv_detail_content, tv_detail_postkind, tv_readcount
-            ,tv_reply_total_count;
+            ,tv_reply_total_count, tv_reply_count;
     private HtmlTextView htmlTextView; //내용임
     private EditText et_replycontent;
     private CommunityApi communityApi;
@@ -78,21 +78,16 @@ public class DetailPostFragment  extends Fragment {
         dataset();
 
 
-
-
          //댓글 어댑터 처리
         if (board.getReplys().isEmpty() == true){
-            replyAdapter = new ReplyAdapter(null);
+
         }else{
             List<Reply> replys = board.getReplys();
             replyAdapter = new ReplyAdapter(replys);
+            replyLayoutManager = new LinearLayoutManager(getActivity());
+            rvReplyList.setLayoutManager(replyLayoutManager);
+            rvReplyList.setAdapter(replyAdapter);
         }
-
-        replyLayoutManager = new LinearLayoutManager(getActivity());
-        rvReplyList.setLayoutManager(replyLayoutManager);
-        rvReplyList.setAdapter(replyAdapter);
-
-
 
 
 
@@ -116,6 +111,7 @@ public class DetailPostFragment  extends Fragment {
 
         tv_readcount.setText(board.getReadCount()+"");
 
+        tv_reply_count.setText(board.getReadCount()+"");
 
         if(board.getReplys().isEmpty() != true){
             tv_reply_total_count.setText(board.getReplys().size()+"");
@@ -148,6 +144,7 @@ public class DetailPostFragment  extends Fragment {
 
         //댓글 총 개수
         tv_reply_total_count = view.findViewById(R.id.tv_reply_total_count);
+        tv_reply_count = view.findViewById(R.id.tv_reply_count);
 
     }
 
@@ -174,14 +171,10 @@ public class DetailPostFragment  extends Fragment {
                             CMRespDto<String> cmRespDto = response.body();
 
                                 //새로고침
-                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                ft.detach(DetailPostFragment.this).attach(DetailPostFragment.this).commit();
+//                                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                                ft.detach(DetailPostFragment.this).attach(DetailPostFragment.this).commit();
                                 Toast.makeText(at, "댓글쓰기 완료", Toast.LENGTH_SHORT).show();
-
-
-
-
-
+                            at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommunityFragment()).commit();
                         }
 
                         @Override
