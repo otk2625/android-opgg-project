@@ -14,16 +14,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cos.javagg.MainActivity;
 import com.cos.javagg.R;
 import com.cos.javagg.champ.Calcu;
+import com.cos.javagg.dto.CMRespDto;
 import com.cos.javagg.fragment.DetailPostFragment;
 import com.cos.javagg.model.board.Board;
+import com.cos.javagg.service.CommunityApi;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyViewHolder> {
     private final List<Board> posts;
     private MainActivity at;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
+    private CommunityApi communityApi;
+    private Call<CMRespDto<Board>> call;
 
     public CommunityAdapter(List<Board> posts) {
         this.posts = posts;
@@ -37,6 +45,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         at = (MainActivity)parent.getContext();
         LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.communitypost_item, parent,false);
+
+
 
         return new MyViewHolder(view);
 
@@ -55,6 +65,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView tv_title, tv_postkinds, tv_posthoursago, tv_postusername, tv_postlikecount;
         private ImageView iv_postimage;
+        private Board board;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,7 +75,27 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
             itemView.setOnClickListener(view -> {
                 Toast.makeText(view.getContext(), "이동됨", Toast.LENGTH_SHORT).show();
-                at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DetailPostFragment()).commit();
+
+                MainActivity.board = board;
+
+                //여기서 조회수 해야함
+                communityApi = CommunityApi.retrofit.create(CommunityApi.class);
+                call = communityApi.count(board.getId());
+                call.enqueue(new Callback<CMRespDto<Board>>() {
+                    @Override
+                    public void onResponse(Call<CMRespDto<Board>> call, Response<CMRespDto<Board>> response) {
+                        CMRespDto<Board> cmRespDto = response.body();
+                        //MainActivity.board = cmRespDto.getData();
+
+                        at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DetailPostFragment()).commit();
+                    }
+
+                    @Override
+                    public void onFailure(Call<CMRespDto<Board>> call, Throwable t) {
+
+                    }
+                });
+
             });
         }
 
@@ -74,10 +105,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             tv_posthoursago = itemView.findViewById(R.id.tv_posthoursago);
             tv_postusername = itemView.findViewById(R.id.tv_postusername);
             iv_postimage = itemView.findViewById(R.id.iv_postimage);
-            tv_postlikecount = itemView.findViewById(R.id.tv_postlikecount);
+            tv_postlikecount = itemView.findViewById(R.id.tv_reply_likecount);
         }
 
         public void setItem(Board post) {
+            this.board = post;
             tv_title.setText(post.getTitle());
             tv_postkinds.setText(post.getCommunityType());
             tv_posthoursago.setText(Calcu.getDate(post.getCreateDate()));

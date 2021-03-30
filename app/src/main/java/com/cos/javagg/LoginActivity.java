@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     private Call<CMRespDto<User>> call;
     private LoginDto loginDto;
     private MainActivity mainActivity;
-    public static Context mContext;
+    public Context mContext = LoginActivity.this;
 
 //    private HttpClient httpClient;
 //    private HttpPost httpPost;
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
         retrofit = new Retrofit.Builder()
                 .client(client)
-                .baseUrl("http://192.168.25.18:8080")
+                .baseUrl("http://113.198.238.68:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

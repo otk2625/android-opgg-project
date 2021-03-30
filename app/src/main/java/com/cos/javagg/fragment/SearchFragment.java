@@ -47,6 +47,11 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
         View view = inflater.inflate(R.layout.fragment_search,container,false);
         at = (MainActivity)container.getContext();
 
+        if (MainActivity.noSummoner == true){
+            Toast toast = Toast.makeText(at, "없는 소환사 이름입니다", Toast.LENGTH_LONG);
+            MainActivity.noSummoner = false;
+        }
+
         //mDrawerLayout=view.findViewById(R.id.drawerLayout);
         //draw = view.findViewById(R.id.draw);
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
@@ -60,18 +65,18 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
 
 
         // 엔터로 검색
-        etSearchName.setOnKeyListener((v, keyCode, event) -> {
-                if (keyCode == event.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP && !enterKeyUp) {
-                    enterKeyUp = true;
-                    // 액티비티 이동
-                    moveToNext();
-                    return true;
-                } else if (keyCode == event.KEYCODE_ENTER) {
-                    enterKeyDown = true;
-                    return true;
-                }
-                return false;
-        });
+//        etSearchName.setOnKeyListener((v, keyCode, event) -> {
+//                if (keyCode == event.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP && !enterKeyUp) {
+//                    enterKeyUp = true;
+//                    // 액티비티 이동
+//                    moveToNext();
+//                    return true;
+//                } else if (keyCode == event.KEYCODE_ENTER) {
+//                    enterKeyDown = true;
+//                    return true;
+//                }
+//                return false;
+//        });
 
 
         // 터치로 검색
@@ -85,6 +90,7 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
     }
 
     private void moveToNext() {
+        //여기서 막아야함
         if (etSearchName.getText().toString() == null || etSearchName.getText().toString().equals("")) {
 //            Toast.makeText(getContext(), "소환사 이름을 입력하세요", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "moveToNext: 실행됨");

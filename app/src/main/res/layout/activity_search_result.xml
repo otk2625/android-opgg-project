@@ -54,6 +54,8 @@
                     android:id="@+id/profile_image"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/ic_launcher_background"
                     app:civ_border_color="#FF000000"
                     app:civ_border_width="2dp"
@@ -64,7 +66,7 @@
                     android:id="@+id/tv_summornername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:text="Hide on bush"
                     android:textColor="@color/black"
@@ -78,18 +80,19 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="431"
+                    android:layout_marginBottom="10dp"
                     app:layout_constraintStart_toStartOf="@+id/profile_image"
                     app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="130dp"
                     android:background="@drawable/layout_border"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/profile_image"
-                    app:layout_constraintVertical_bias="0.422"
-                    tools:layout_editor_absoluteX="13dp">
+                    app:layout_constraintVertical_bias="0.693"
+                    tools:layout_editor_absoluteX="15dp">
 
                     <ImageView
                         android:id="@+id/iv_tier"
@@ -98,8 +101,7 @@
                         android:layout_marginStart="28dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                         />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_rankType"
@@ -197,7 +199,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="20dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 

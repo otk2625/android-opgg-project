@@ -18,6 +18,7 @@ import com.cos.javagg.fragment.RankingFragment;
 import com.cos.javagg.fragment.SearchFragment;
 
 import com.cos.javagg.listener.OnBackPressedListener;
+import com.cos.javagg.model.board.Board;
 import com.cos.javagg.model.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import info.androidhive.fontawesome.FontTextView;
+import retrofit2.http.POST;
 
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener {
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
     private Context mContext = MainActivity.this;
     private BottomNavigationView bottomNavigationView;
     public static User loginUser;
+    public static Board board;
+    public static boolean noSummoner = false;
 
 
     @Override

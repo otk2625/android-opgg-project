@@ -14,7 +14,7 @@
         android:text="@string/fa_caret_up_solid"
 
         android:textColor="@android:color/darker_gray"
-        android:textSize="20dp"
+        android:textSize="35dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         app:solid_icon="true" />
 
     <TextView
-        android:id="@+id/tv_postlikecount"
+        android:id="@+id/tv_reply_likecount"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"

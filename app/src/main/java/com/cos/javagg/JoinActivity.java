@@ -45,7 +45,7 @@ public class JoinActivity extends AppCompatActivity {
         findById();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.25.18:8080")
+                .baseUrl("http://113.198.238.68:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -89,15 +89,16 @@ public class JoinActivity extends AppCompatActivity {
 
                         if (cmRespDto.getResultCode() == 1) {
                             //성공
-                            Toast.makeText((LoginActivity)loginActivity.mContext, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                            isJoin = true;
+                            finish();
                         } else {
                             //실패
                             Toast.makeText(JoinActivity.this, "아이디 중복", Toast.LENGTH_SHORT).show();
                         }
 
-                        isJoin = true;
 
-                        finish();
+
+
 
                     }
 

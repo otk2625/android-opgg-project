@@ -51,9 +51,7 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    
 
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
@@ -69,6 +67,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+
+    //http text view
+    implementation 'org.sufficientlysecure:html-textview:4.0'
 
 
 

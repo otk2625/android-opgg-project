@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -59,7 +60,10 @@ public class SearchResultActivity extends AppCompatActivity {
         progressBar.setProgress(100);
 
         CheckTypesTask task = new CheckTypesTask();
+
         task.execute();
+
+
 
 
 
@@ -100,7 +104,7 @@ public class SearchResultActivity extends AppCompatActivity {
         // 이미지뷰 가져오기
         Glide
                 .with(this)
-                .load("http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/"+id+".png")
+                .load("http://ddragon.leagueoflegends.com/cdn/11.6.1/img/profileicon/"+id+".png")
                 .centerCrop()
                 .into(view1);
 
@@ -120,25 +124,34 @@ public class SearchResultActivity extends AppCompatActivity {
             public void onResponse(Call<CMRespDto<LoLDto>> call, Response<CMRespDto<LoLDto>> response) {
                 CMRespDto<LoLDto> cmRespDto = response.body();
 
+                if(cmRespDto.getResultCode() == 1){
+                    ApiSummoner apiSummoner = cmRespDto.getData().getApiSummoner();
+                    summonerInfoSetting(apiSummoner);
 
-                ApiSummoner apiSummoner = cmRespDto.getData().getApiSummoner();
-                summonerInfoSetting(apiSummoner);
+                    ApiMatchEntry apiMatchEntry = cmRespDto.getData().getApiMatchEntry();
+                    apiMatchEntry.getMatches().get(0).getChampion();
+                    List<ApiMatch> apiMatch = cmRespDto.getData().getApiMatch();
 
-                ApiMatchEntry apiMatchEntry = cmRespDto.getData().getApiMatchEntry();
-                apiMatchEntry.getMatches().get(0).getChampion();
-                List<ApiMatch> apiMatch = cmRespDto.getData().getApiMatch();
+                    // 리스트에 어댑터 보내기
+                    adapter(apiMatchEntry, apiMatch);
 
-                // 리스트에 어댑터 보내기
-                adapter(apiMatchEntry, apiMatch);
+                    //랭크 정보
+                    List<ApiEntry> apiEntries = cmRespDto.getData().getApiEntries();
+                    Log.d(TAG, "onResponse: apiEntries : " + apiEntries);
+                    if (apiEntries.isEmpty() == true){
+                        Toast.makeText(SearchResultActivity.this, "비었다리", Toast.LENGTH_SHORT).show();
+                    }else{
+                        rankInfo(apiEntries.get(0));
+                    }
+                } else{
+                    Toast.makeText(SearchResultActivity.this, "없는 소환사입니다 다시 확인바랍니다", Toast.LENGTH_SHORT).show();
 
-                //랭크 정보
-                List<ApiEntry> apiEntries = cmRespDto.getData().getApiEntries();
-                Log.d(TAG, "onResponse: apiEntries : " + apiEntries);
-                if (apiEntries.isEmpty() == true){
-                    Toast.makeText(SearchResultActivity.this, "비었다리", Toast.LENGTH_SHORT).show();
-                }else{
-                    rankInfo(apiEntries.get(0));
+                    MainActivity.noSummoner = true;
+
+                    finish();
                 }
+
+
 
 
 
