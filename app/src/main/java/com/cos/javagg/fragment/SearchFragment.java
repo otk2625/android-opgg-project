@@ -153,6 +153,7 @@ public class SearchFragment extends Fragment implements NavigationView.OnNavigat
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch(item.getItemId()) {
                 case R.id.account:
+                    Log.d(TAG, "onNavigationItemSelected: 클릭됨");
                     Toast.makeText(at, "item1 clicked..", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.setting:

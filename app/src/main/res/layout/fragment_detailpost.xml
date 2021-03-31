@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dl_community_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<ScrollView
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_communitydetailpost"/>
+    <include layout="@layout/toolbar_communitydetailpost2"/>
 
     <View
         android:layout_width="match_parent"
@@ -322,3 +328,15 @@
 
 </LinearLayout>
 </ScrollView>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nv_community_detail"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:fitsSystemWindows="true"
+
+        app:headerLayout="@layout/nav_header_community"
+        app:menu="@menu/community_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

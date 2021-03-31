@@ -6,21 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
- <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nv_community"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:layout_gravity="end"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_community"
-        app:menu="@menu/community_menu" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar_community"/>
+        <include layout="@layout/toolbar_community2"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -87,5 +80,14 @@
         android:layout_height="match_parent"/>
 
     </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nv_community"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_community"
+        app:menu="@menu/community_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

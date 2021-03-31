@@ -38,10 +38,13 @@ public interface CommunityApi {
     Call<CMRespDto<Board>> count(@Path(value = "id") int id);
 
     @POST("/reply")
-    Call<CMRespDto<String>> reply(@Body ReplyDto replyDto);
+    Call<CMRespDto<Board>> reply(@Body ReplyDto replyDto);
+
+    @DELETE("/reply/{id}")
+    Call<CMRespDto<String>> replyDelete(@Path(value = "id") int id);
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.25.18:8080")
+            .baseUrl("http://113.198.238.68:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 }

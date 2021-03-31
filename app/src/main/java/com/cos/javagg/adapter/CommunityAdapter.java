@@ -65,7 +65,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView tv_title, tv_postkinds, tv_posthoursago, tv_postusername, tv_postlikecount;
+        private TextView tv_title, tv_postkinds, tv_posthoursago, tv_postusername, tv_postlikecount, tv_reply_ccccount;
         private ImageView iv_postimage;
         private Board board;
         private FontTextView ftv_likebtn;
@@ -129,6 +129,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             tv_postlikecount = itemView.findViewById(R.id.tv_reply_likecount);
 
             ftv_likebtn = itemView.findViewById(R.id.ftv_likebtn);
+
+            tv_reply_ccccount = itemView.findViewById(R.id.tv_reply_ccccount);
         }
 
         public void setItem(Board post) {
@@ -138,6 +140,12 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             tv_posthoursago.setText(Calcu.getDate(post.getCreateDate()));
             tv_postusername.setText(post.getUser().getUsername());
             tv_postlikecount.setText(post.getLikeCount()+"");
+
+            if(post.getReplys() == null){
+                tv_reply_ccccount.setText("");
+            }else{
+                tv_reply_ccccount.setText("["+post.getReplys().size()+"]");
+            }
         }
     }
 }

@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/first"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="JAVA.GG"
+            android:textColor="#03A9F4"
+            android:textSize="35dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/first"
+            app:layout_constraintTop_toTopOf="@+id/first" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:paddingTop="37dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingRight="15dp"
+        app:layout_constraintStart_toStartOf="@+id/first"
+        app:layout_constraintTop_toBottomOf="@+id/first">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_nav_login"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:backgroundTint="#30DAA4"
@@ -28,5 +54,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout5"
+        app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:paddingLeft="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="커뮤니티"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

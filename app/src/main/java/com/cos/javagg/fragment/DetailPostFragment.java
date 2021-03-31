@@ -1,9 +1,13 @@
 package com.cos.javagg.fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,12 +17,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cos.javagg.LoginActivity;
 import com.cos.javagg.MainActivity;
 import com.cos.javagg.R;
 import com.cos.javagg.adapter.CommunityAdapter;
@@ -29,6 +39,7 @@ import com.cos.javagg.dto.ReplyDto;
 import com.cos.javagg.model.board.Board;
 import com.cos.javagg.model.reply.Reply;
 import com.cos.javagg.service.CommunityApi;
+import com.google.android.material.navigation.NavigationView;
 
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
@@ -40,7 +51,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailPostFragment  extends Fragment {
+public class DetailPostFragment  extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "DetailPostFragment";
     private RecyclerView rvReplyList;
     private RecyclerView.LayoutManager replyLayoutManager;
@@ -53,17 +64,42 @@ public class DetailPostFragment  extends Fragment {
     private HtmlTextView htmlTextView; //내용임
     private EditText et_replycontent;
     private CommunityApi communityApi;
-    private Call<CMRespDto<String>> call;
+    private Call<CMRespDto<Board>> call;
+    private Call<CMRespDto<String>> call2;
     private Board board;
+    private DrawerLayout dl_community_detail;
+    private NavigationView nv_community_detail;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         at = (MainActivity)container.getContext();
 
-        View view = inflater.inflate(R.layout.fragment_detailpost,container,false);
+        setHasOptionsMenu(true);
 
+        View view = inflater.inflate(R.layout.fragment_detailpost,container,false);
         findById(view);
+
+        //toolBar를 통해 App Bar 생성
+        Toolbar toolbar = view.findViewById(R.id.tb_community_detail);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
+        //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Incon 추가
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                ((AppCompatActivity)getActivity()),
+                dl_community_detail,
+                toolbar,
+                R.string.drawer_open,
+                R.string.drawer_close
+        );
+
+        dl_community_detail.addDrawerListener(actionBarDrawerToggle);
+        nv_community_detail.setNavigationItemSelectedListener(this::onNavigationItemSelected);
+
+
+
 
         //사용자 있는지 체크
         if(at.loginUser != null){
@@ -111,7 +147,7 @@ public class DetailPostFragment  extends Fragment {
 
         tv_readcount.setText(board.getReadCount()+"");
 
-        tv_reply_count.setText(board.getReadCount()+"");
+        tv_reply_count.setText(board.getReplys().size()+"");
 
         if(board.getReplys().isEmpty() != true){
             tv_reply_total_count.setText(board.getReplys().size()+"");
@@ -131,7 +167,7 @@ public class DetailPostFragment  extends Fragment {
         btn_update = view.findViewById(R.id.btn_update);
 
 
-        ftvAddBack = view.findViewById(R.id.ftv_DetailPostback);
+        //ftvAddBack = view.findViewById(R.id.ftv_DetailPostback);
 
         tv_detail_title = view.findViewById(R.id.tv_detail_title);
         tv_detail_createdate = view.findViewById(R.id.tv_reply_username);
@@ -146,6 +182,8 @@ public class DetailPostFragment  extends Fragment {
         tv_reply_total_count = view.findViewById(R.id.tv_reply_total_count);
         tv_reply_count = view.findViewById(R.id.tv_reply_count);
 
+        dl_community_detail = (DrawerLayout) view.findViewById(R.id.dl_community_detail);
+        nv_community_detail = (NavigationView) view.findViewById(R.id.nv_community_detail);
     }
 
     public void listener(View view){
@@ -163,22 +201,26 @@ public class DetailPostFragment  extends Fragment {
                             .build();
 
                     call = communityApi.reply(replyDto);
-                    call.enqueue(new Callback<CMRespDto<String>>() {
+                    call.enqueue(new Callback<CMRespDto<Board>>() {
                         @Override
-                        public void onResponse(Call<CMRespDto<String>> call, Response<CMRespDto<String>> response) {
+                        public void onResponse(Call<CMRespDto<Board>> call, Response<CMRespDto<Board>> response) {
                             //댓글 성공시
 
-                            CMRespDto<String> cmRespDto = response.body();
+                            CMRespDto<Board> cmRespDto = response.body();
+
+                            MainActivity.board = cmRespDto.getData();
 
                                 //새로고침
-//                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                                ft.detach(DetailPostFragment.this).attach(DetailPostFragment.this).commit();
+                                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                ft.detach(DetailPostFragment.this).attach(DetailPostFragment.this).commit();
+
+                                et_replycontent.setText("");
                                 Toast.makeText(at, "댓글쓰기 완료", Toast.LENGTH_SHORT).show();
-                            at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommunityFragment()).commit();
+                            //at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommunityFragment()).commit();
                         }
 
                         @Override
-                        public void onFailure(Call<CMRespDto<String>> call, Throwable t) {
+                        public void onFailure(Call<CMRespDto<Board>> call, Throwable t) {
 
                         }
                     });
@@ -190,9 +232,9 @@ public class DetailPostFragment  extends Fragment {
         });
 
         //뒤로가기 버튼
-        ftvAddBack.setOnClickListener(v -> {
-            at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommunityFragment()).commit();
-        });
+//        ftvAddBack.setOnClickListener(v -> {
+//            at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommunityFragment()).commit();
+//        });
 
         //삭제 버튼
         btn_delete.setOnClickListener(v -> {
@@ -206,8 +248,8 @@ public class DetailPostFragment  extends Fragment {
                 {
                     //삭제 로직
 
-                    call = communityApi.delete(board.getId());
-                    call.enqueue(new Callback<CMRespDto<String>>() {
+                    call2 = communityApi.delete(board.getId());
+                    call2.enqueue(new Callback<CMRespDto<String>>() {
                         @Override
                         public void onResponse(Call<CMRespDto<String>> call, Response<CMRespDto<String>> response) {
                             CMRespDto<String> cmRespDto = response.body();
@@ -239,5 +281,77 @@ public class DetailPostFragment  extends Fragment {
         btn_update.setOnClickListener(v -> {
             at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new updatePostFragment()).commit();
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.community_menu:{ // 왼쪽 상단 버튼 눌렀을 때
+                Log.d(TAG, "onOptionsItemSelected: 선택됨");
+                //로직짜야함
+                dl_community_detail.openDrawer(GravityCompat.END);
+
+                //로그인 Intent
+//            if (at.loginUser == null){
+//                Intent intent = new Intent(getActivity(), LoginActivity.class);
+//                startActivity(intent);
+//            } else {
+//                Toast.makeText(at, "현재 로그인중인 사람은 : " + at.loginUser.getUsername(), Toast.LENGTH_SHORT).show();
+//            }
+
+
+                //헤더 뷰 접근
+                View headerView = nv_community_detail.getHeaderView(0);
+                Button login = headerView.findViewById(R.id.btn_nav_login);
+                if (at.loginUser == null){
+                    login.setText("로그인");
+                    login.setOnClickListener(v1 -> {
+                        Log.d(TAG, "listen: 로그인 클릭됨");
+                        dl_community_detail.closeDrawer(GravityCompat.END);
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    });
+
+                } else {
+                    login.setText("로그아웃");
+                    login.setOnClickListener(v1 -> {
+                        MainActivity.loginUser = null;
+                        dl_community_detail.closeDrawer(GravityCompat.END);
+                        Toast.makeText(at, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
+                    });
+
+                }
+
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.community_toolbar_menu, menu);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.menu_funny:
+                Log.d(TAG, "onNavigationItemSelected: 클릭됨");
+                Toast.makeText(at, "item1 clicked..", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_free:
+                Toast.makeText(at, "item2 clicked..", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_setting_commu:
+                Toast.makeText(at, "item3 clicked..", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        dl_community_detail.closeDrawer(GravityCompat.END);
+        return false;
+
     }
 }
