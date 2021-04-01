@@ -22,8 +22,8 @@ public interface CommunityApi {
 
 
 
-    @GET("/board")
-    Call<CMRespDto<List<Board>>> findAll();
+    @GET("/board/{page}")
+    Call<CMRespDto<List<Board>>> findAll(@Path(value = "page") int page);
 
     @POST("/board/{id}")
     Call<CMRespDto<String>> save(@Path(value = "id") int id, @Body BoardDto postDto);

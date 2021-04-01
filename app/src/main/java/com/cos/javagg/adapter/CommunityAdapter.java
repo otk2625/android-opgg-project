@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,41 +28,77 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyViewHolder> {
-    private final List<Board> posts;
+public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final List<Board> boards;
     private MainActivity at;
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
     private CommunityApi communityApi;
     private Call<CMRespDto<Board>> call;
 
-    public CommunityAdapter(List<Board> posts) {
-        this.posts = posts;
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
+
+    public CommunityAdapter(List<Board> boards) {
+        this.boards = boards;
     }
 
 
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         at = (MainActivity)parent.getContext();
         LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.communitypost_item, parent,false);
 
+        if (viewType == VIEW_TYPE_ITEM) {
+            View view = inflater.inflate(R.layout.communitypost_item, parent, false);
 
+            return new MyViewHolder(view);
+        }else{
+            View view = inflater.inflate(R.layout.item_logding, parent, false);
+            return new LoadingViewHolder(view);
+        }
 
-        return new MyViewHolder(view);
 
     }
 
+    // 5. addItem, removeItem
+    public  void addItem(Board board){
+        boards.add(board);
+        notifyDataSetChanged();
+    }
+    public  void removeItem(int position){
+        boards.remove(position);
+        notifyDataSetChanged();
+    }
+
+
+
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.setItem(posts.get(position));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof MyViewHolder) {
+            populateItemRows((MyViewHolder) holder, position);
+        } else if (holder instanceof LoadingViewHolder) {
+            showLoadingView((LoadingViewHolder) holder, position);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return boards.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        return boards == null ? 0 : boards.size();
+    }
+
+    private void showLoadingView(LoadingViewHolder holder, int position) {
+
+    }
+
+    private void populateItemRows(MyViewHolder holder, int position) {
+        Board board = boards.get(position);
+        holder.setItem(board);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -133,19 +170,28 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             tv_reply_ccccount = itemView.findViewById(R.id.tv_reply_ccccount);
         }
 
-        public void setItem(Board post) {
-            this.board = post;
-            tv_title.setText(post.getTitle());
-            tv_postkinds.setText(post.getCommunityType());
-            tv_posthoursago.setText(Calcu.getDate(post.getCreateDate()));
-            tv_postusername.setText(post.getUser().getUsername());
-            tv_postlikecount.setText(post.getLikeCount()+"");
+        public void setItem(Board board) {
+            this.board = board;
+            tv_title.setText(board.getTitle());
+            tv_postkinds.setText(board.getCommunityType());
+            tv_posthoursago.setText(Calcu.getDate(board.getCreateDate()));
+            tv_postusername.setText(board.getUser().getUsername());
+            tv_postlikecount.setText(board.getLikeCount()+"");
 
-            if(post.getReplys() == null){
+            if(board.getReplys() == null){
                 tv_reply_ccccount.setText("");
             }else{
-                tv_reply_ccccount.setText("["+post.getReplys().size()+"]");
+                tv_reply_ccccount.setText("["+board.getReplys().size()+"]");
             }
+        }
+    }
+
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+        private ProgressBar progressBar;
+
+        public LoadingViewHolder(@NonNull View itemView) {
+            super(itemView);
+            progressBar = itemView.findViewById(R.id.progressBar);
         }
     }
 }
