@@ -59,6 +59,7 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
     private List<Board> boards;
     private List<Board> addBoards;
     private int page = 0;
+    private boolean isLast=false;
 
     //페이징
     private boolean isLoading = false;
@@ -91,7 +92,7 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
                 CMRespDto<List<Board>> cmRespDto = response.body();
                 boards = cmRespDto.getData();
 
-                page = page + 10;
+
 
                 //여기서 어댑터 전달
                 communityAdapter = new CommunityAdapter(boards);
@@ -132,8 +133,10 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
                 if (!isLoading) {
                     if (layoutManager != null && layoutManager.findLastCompletelyVisibleItemPosition() == boards.size() - 1) {
                         //리스트 마지막
-                        if(boards.size()>9 && page%10 != 0){
+                        if(boards.size()>9){
 
+                            page = page + 10;
+                            Log.d(TAG, "onScrolled: page값" + page);
 
                             call = communityApi.findAll(page);
                             call.enqueue(new Callback<CMRespDto<List<Board>>>() {
@@ -141,8 +144,14 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
                                 public void onResponse(Call<CMRespDto<List<Board>>> call, Response<CMRespDto<List<Board>>> response) {
                                     CMRespDto<List<Board>> cmRespDto = response.body();
 
-                                    addBoards = cmRespDto.getData();
-                                    Log.d(TAG, "onResponse: 동작함" + cmRespDto.getData().toString());
+                                    if(cmRespDto.getResultCode() == 1){
+                                        addBoards = cmRespDto.getData();
+                                        Log.d(TAG, "onResponse: 동작함" + cmRespDto.getData().toString());
+                                    }else{
+                                        Log.d(TAG, "onResponse: 이거 널값인데");
+                                        isLast = true;
+                                    }
+
                                 }
 
                                 @Override
@@ -152,6 +161,7 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
                             });
 
                             loadMore();
+                            page = page + 10;
                         }
                         isLoading = true;
                     }
@@ -161,36 +171,45 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
     }
 
     private void loadMore() {
-        boards.add(null);
-        communityAdapter.notifyItemInserted(boards.size() - 1);
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                boards.remove(boards.size() - 1);
-                int scrollPosition = boards.size(); //지금 스크롤 위치
-                communityAdapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition;
-                int nextLimit = currentSize + addBoards.size();
+        if (isLast == false){
+            Log.d(TAG, "loadMore: isLast" + isLast);
+            boards.add(null);
+            communityAdapter.notifyItemInserted(boards.size() - 1);
 
-                //여기서 뿌려줘야함
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    boards.remove(boards.size() - 1); //9 , 4개더 가져올 예정
+                    int scrollPosition = boards.size(); //지금 스크롤 위치 = 10
+                    communityAdapter.notifyItemRemoved(scrollPosition);
+                    int currentSize = scrollPosition;
+                    int nextLimit = currentSize + addBoards.size(); //10 + 4 = 14
+
+                    //여기서 뿌려줘야함
 //                for(int i = 0; i<boards.size(); i++){
 //                    communityAdapter.addItem(CommunityFragment.this.addBoards.get(i));
 //                }
 
-                int c = 0;
-                while (currentSize - 1 < nextLimit) {
-                    boards.add(addBoards.get(0));
-                    c++;
-                    currentSize++;
+                    int c = 0;
+                    while (currentSize < nextLimit) { //9<14까지? => 10 , 11, 12, 13
+                        boards.add(addBoards.get(c));
+                        c++;
+                        currentSize++;
+                    }
+
+                    communityAdapter.notifyDataSetChanged();
+
+                    isLoading = false;
                 }
+            }, 2000);
+        }else{
+            isLoading = false;
+            Toast.makeText(at, "마지막 게시글입니다", Toast.LENGTH_SHORT).show();
+        }
 
-                communityAdapter.notifyDataSetChanged();
 
-                isLoading = false;
-            }
-        }, 2000);
     }
 
     public void init(View view){

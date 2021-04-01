@@ -7,13 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import com.cos.javagg.fragment.ChampionFragment;
 import com.cos.javagg.fragment.CommunityFragment;
-import com.cos.javagg.fragment.LoginFragment;
-import com.cos.javagg.fragment.MakePostFragment;
 import com.cos.javagg.fragment.RankingFragment;
 import com.cos.javagg.fragment.SearchFragment;
 
@@ -22,14 +18,6 @@ import com.cos.javagg.model.board.Board;
 import com.cos.javagg.model.user.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
-
-import info.androidhive.fontawesome.FontTextView;
-import retrofit2.http.POST;
 
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener {
 
@@ -77,9 +65,6 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
                     break;
                 case R.id.bottom_ranking :
                     selectedFragment = new RankingFragment();
-                    break;
-                case R.id.bottom_login :
-                    selectedFragment = new LoginFragment();
                     break;
 
             }

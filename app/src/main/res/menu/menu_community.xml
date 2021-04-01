@@ -13,8 +13,4 @@
         android:id="@+id/bottom_ranking"
         android:title="랭킹"
         android:icon="@drawable/ic_glyph_solid_trophy"/>
-    <item
-        android:id="@+id/bottom_login"
-        android:title="로그인"
-        android:icon="@drawable/ic_glyph_solid_lock_open"/>
 </menu>

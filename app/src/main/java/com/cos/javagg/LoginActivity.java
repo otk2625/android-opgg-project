@@ -1,9 +1,11 @@
 package com.cos.javagg;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.cos.javagg.dto.CMRespDto;
 import com.cos.javagg.dto.LoginDto;
+import com.cos.javagg.fragment.CommunityFragment;
 import com.cos.javagg.model.user.User;
 import com.cos.javagg.service.AuthApi;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -88,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
 
         retrofit = new Retrofit.Builder()
                 .client(client)
-                .baseUrl("http://113.198.238.68:8080")
+                .baseUrl("http://192.168.25.18:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -123,8 +126,15 @@ public class LoginActivity extends AppCompatActivity {
                        User test = cmRespDto.getData();
                         Log.d(TAG, "onResponse: 실행됨");
                         Log.d(TAG, "onResponse: cmRespDto.getResultCode() : " + cmRespDto.getResultCode());
-                       if (cmRespDto.getResultCode() == 1){
-                           Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                       if (cmRespDto.getData() != null){
+                           AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+                           builder.setTitle("").setMessage("로그인 완료");
+
+                           builder.setNegativeButton("닫기",null);
+
+                           AlertDialog alertDialog = builder.create();
+                           alertDialog.show();
 
                            Gson gson = new Gson();
                            Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);

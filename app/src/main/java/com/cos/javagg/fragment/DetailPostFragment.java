@@ -83,19 +83,24 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
         //toolBar를 통해 App Bar 생성
         Toolbar toolbar = view.findViewById(R.id.tb_community_detail);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Incon 추가
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-                ((AppCompatActivity)getActivity()),
-                dl_community_detail,
-                toolbar,
-                R.string.drawer_open,
-                R.string.drawer_close
-        );
-
-        dl_community_detail.addDrawerListener(actionBarDrawerToggle);
+        //필요없음
+//        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+//                ((AppCompatActivity)getActivity()),
+//                dl_community_detail,
+//                toolbar,
+//                R.string.drawer_open,
+//                R.string.drawer_close
+//        );
+//
+//        dl_community_detail.addDrawerListener(actionBarDrawerToggle);
         nv_community_detail.setNavigationItemSelectedListener(this::onNavigationItemSelected);
 
 
@@ -286,6 +291,11 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                //뒤로가기
+                at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommunityFragment()).commit();
+                return true;
+            }
             case R.id.community_menu:{ // 왼쪽 상단 버튼 눌렀을 때
                 Log.d(TAG, "onOptionsItemSelected: 선택됨");
                 //로직짜야함
@@ -324,6 +334,8 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
 
                 return true;
             }
+
+            
         }
         return super.onOptionsItemSelected(item);
     }

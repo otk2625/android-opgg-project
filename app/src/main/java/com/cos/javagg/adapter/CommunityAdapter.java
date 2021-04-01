@@ -103,7 +103,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView tv_title, tv_postkinds, tv_posthoursago, tv_postusername, tv_postlikecount, tv_reply_ccccount;
-        private ImageView iv_postimage;
         private Board board;
         private FontTextView ftv_likebtn;
         private boolean togle = false;
@@ -162,7 +161,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tv_postkinds = itemView.findViewById(R.id.tv_postkinds);
             tv_posthoursago = itemView.findViewById(R.id.tv_posthoursago);
             tv_postusername = itemView.findViewById(R.id.tv_postusername);
-            iv_postimage = itemView.findViewById(R.id.iv_postimage);
+
             tv_postlikecount = itemView.findViewById(R.id.tv_reply_likecount);
 
             ftv_likebtn = itemView.findViewById(R.id.ftv_likebtn);
