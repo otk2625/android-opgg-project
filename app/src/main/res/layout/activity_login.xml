@@ -30,13 +30,15 @@
             android:text="간편 로그인"
             android:textSize="17dp"
             android:textColor="@color/black"/>
-        <com.google.android.material.button.MaterialButton
+
+        <com.facebook.login.widget.LoginButton
+            xmlns:facebook="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/facebook_login"
             android:layout_width="match_parent"
+            facebook:com_facebook_login_text="페이스북 로그인"
             android:layout_height="60dp"
-            android:backgroundTint="#3F51B5"
-            android:textSize="20dp"
-            android:text="구글 연결"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp" />
 
 
         <TextView

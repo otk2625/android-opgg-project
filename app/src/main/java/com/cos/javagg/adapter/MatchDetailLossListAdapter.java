@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -70,7 +71,7 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
                 iv_detail_item2, iv_detail_item3, iv_detail_item4 ,iv_detail_item5, iv_detail_item6;
         private TextView iv_detail_summoner, iv_detail_kill, iv_detail_death, iv_detail_assist, iv_detail_grade,
                 iv_detail_cs, tv_assist_solo, iv_detail_gold;
-        private Button iv_detail_champ_level;
+        private AppCompatButton iv_detail_champ_level;
         private ProgressBar pg_detail;
 
         public MyViewHolder(@NonNull View itemView) {

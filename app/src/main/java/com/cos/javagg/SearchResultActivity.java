@@ -47,7 +47,7 @@ public class SearchResultActivity extends AppCompatActivity {
     private SummonerApi summonerApi;
     private Call<CMRespDto<LoLDto>> call;
     private TextView tvSummornername, tvSummonerLevel, tvRankType, tvTier, tvTierPoint, tvRankWin, tvRankLoss, tvOdds, tvPersent;
-
+    private CheckTypesTask task;
     private ProgressBar progressBar;
 
     @Override
@@ -56,21 +56,13 @@ public class SearchResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result);
         findid();
 
-        progressBar.setIndeterminate(false);
-        progressBar.setProgress(100);
-
-        CheckTypesTask task = new CheckTypesTask();
-
-        task.execute();
-
-
-
-
-
         Intent intent = getIntent();
         String summonerName = intent.getStringExtra("summonerName");
         Log.d(TAG, "onCreate: " + intent.getStringExtra("summonerName"));
         call = summonerApi.getInfo(summonerName);
+
+
+        task = new CheckTypesTask();
 
         infoFindByName(summonerName);
         toolbarsetting();
@@ -125,6 +117,11 @@ public class SearchResultActivity extends AppCompatActivity {
                 CMRespDto<LoLDto> cmRespDto = response.body();
 
                 if(cmRespDto.getResultCode() == 1){
+                    progressBar.setIndeterminate(false);
+                    progressBar.setProgress(100);
+
+                    task.execute();
+
                     ApiSummoner apiSummoner = cmRespDto.getData().getApiSummoner();
                     summonerInfoSetting(apiSummoner);
 

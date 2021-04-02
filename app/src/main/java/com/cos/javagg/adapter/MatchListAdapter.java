@@ -142,10 +142,10 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.MyVi
 
                             if(apiMatch.getParticipants().get(j).getStats().isWin() == false){
                                 tvWinOrLoss.setText("패");
-                                clWinOrLoss.setBackgroundColor(Color.RED);
+                                clWinOrLoss.setBackgroundColor(Color.parseColor("#E91E63"));
                             }else {
                                 tvWinOrLoss.setText("승");
-                                clWinOrLoss.setBackgroundColor(Color.BLUE);
+                                clWinOrLoss.setBackgroundColor(Color.parseColor("#5383E9"));
                             }
 
                             queueType = apiMatch.getQueueId()+"";

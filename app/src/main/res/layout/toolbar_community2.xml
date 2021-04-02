@@ -48,8 +48,8 @@
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="13dp"
         app:layout_constraintTop_toBottomOf="@+id/tb_community">
 
 
@@ -72,7 +72,7 @@
             android:id="@+id/ftv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/fa_search_solid"
             android:textColor="@android:color/darker_gray"
 
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fa_edit"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="#30DAA4"
             android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

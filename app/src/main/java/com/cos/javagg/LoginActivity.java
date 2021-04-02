@@ -5,40 +5,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
-import android.webkit.CookieManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cos.javagg.callback.LoginCallback;
 import com.cos.javagg.dto.CMRespDto;
+import com.cos.javagg.dto.FaceBookLoginDto;
 import com.cos.javagg.dto.LoginDto;
-import com.cos.javagg.fragment.CommunityFragment;
 import com.cos.javagg.model.user.User;
 import com.cos.javagg.service.AuthApi;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.Gson;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
+import org.json.JSONObject;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
 
-import lombok.val;
-import okhttp3.Cookie;
 import okhttp3.CookieJar;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -54,9 +54,15 @@ public class LoginActivity extends AppCompatActivity {
     private Button btn_login;
     private AuthApi authApi;
     private Call<CMRespDto<User>> call;
+    private Call<CMRespDto<User>> callFaceBook;
     private LoginDto loginDto;
     private MainActivity mainActivity;
     public Context mContext = LoginActivity.this;
+
+    //페이스북 로그인
+    private LoginButton btn_Facebook_Login;
+    private CallbackManager callbackManager;
+    private LoginCallback loginCallack;
 
 //    private HttpClient httpClient;
 //    private HttpPost httpPost;
@@ -97,6 +103,120 @@ public class LoginActivity extends AppCompatActivity {
 
         authApi = retrofit.create(AuthApi.class);
 
+
+        facebooklogin();
+
+    }
+
+    private void facebooklogin() {
+        //페이스북 로그인
+        callbackManager = CallbackManager.Factory.create();
+        loginCallack = new LoginCallback();
+
+        btn_Facebook_Login.setOnClickListener(view -> {
+            btn_Facebook_Login.setReadPermissions(Arrays.asList("public_profile", "email"));
+            //btn_Facebook_Login.registerCallback(callbackManager, loginCallack);
+            // Callback registration
+            btn_Facebook_Login.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    // App code
+                    Log.d(TAG, "onSuccess: " + loginResult.toString());
+                    // App code
+                    Log.e(TAG, "FaceBook 로그인 성공 ");
+                    /** 페이스북 로그인 성공시 계정에 관련된 정보는 별도로 가지고 와야함 **/
+                    GraphRequest request = new GraphRequest().newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            try {
+                                Log.e(TAG, "FaceBook onSuccess : " + object.getString("email"));
+                                Log.e(TAG, "FaceBook 전체 : " + object.toString());
+                                FaceBookLoginDto faceBookLoginDto = FaceBookLoginDto.builder()
+                                        .email(object.getString("email"))
+                                        .id(object.getLong("id"))
+                                        .name(object.getString("name"))
+                                        .build();
+                                Log.d(TAG, "onCompleted: 확인해보자 : " + faceBookLoginDto.toString());
+                                //여기서 이 값을 DB에 저장하고, 로그인 상태를 유지시켜야 한다.
+
+                                call = authApi.getLoginFaceBook(faceBookLoginDto);
+                                call.enqueue(new Callback<CMRespDto<User>>() {
+                                    @Override
+                                    public void onResponse(Call<CMRespDto<User>> call, Response<CMRespDto<User>> response) {
+                                        //로그인 정보 받아
+                                        CMRespDto<User> cmRespDto = response.body();
+
+                                        if(cmRespDto.getResultCode() == 2){
+                                            Toast.makeText(LoginActivity.this, "최초 사용자입니다. 자동 회원가입 후 로그인 합니다", Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "onResponse: 로그인 정보 : " + cmRespDto.getData().toString());
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+                                            builder.setTitle("").setMessage("최초 사용자입니다. 자동 회원가입 후 로그인 합니다");
+
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+
+                                            Gson gson = new Gson();
+                                            Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                            User user = cmRespDto.getData();
+                                            newIntent.putExtra("auth",gson.toJson(user));
+
+                                            LoginManager.getInstance().logOut();
+
+                                            startActivity(newIntent);
+                                            finish();
+
+                                        }else{
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+                                            builder.setTitle("").setMessage("로그인 완료");
+
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+
+                                            Gson gson = new Gson();
+                                            Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                            User user = cmRespDto.getData();
+                                            newIntent.putExtra("auth",gson.toJson(user));
+
+                                            LoginManager.getInstance().logOut();
+
+                                            startActivity(newIntent);
+                                            finish();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<CMRespDto<User>> call, Throwable t) {
+
+                                    }
+                                });
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                    Bundle parameters = new Bundle();
+                    parameters.putString("fields", "id,name,email");
+                    request.setParameters(parameters);
+                    request.executeAsync();
+
+                }
+
+                @Override
+                public void onCancel() {
+                    // App code
+                }
+
+                @Override
+                public void onError(FacebookException exception) {
+                    // App code
+                }
+            });
+        });
+
     }
 
 
@@ -107,6 +227,8 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         tvForgetPassword = findViewById(R.id.tv_forgetpassword);
        // authApi = AuthApi.retrofit.create(AuthApi.class);
+
+        btn_Facebook_Login = findViewById(R.id.facebook_login);
     }
 
     public void listener(){
@@ -188,5 +310,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

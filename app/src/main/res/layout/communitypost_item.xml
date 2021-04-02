@@ -73,6 +73,9 @@
         android:id="@+id/tv_postusername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ems="5"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="유저ID"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/tv_posthoursago" />

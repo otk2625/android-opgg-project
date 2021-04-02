@@ -60,7 +60,7 @@ public class Calcu {
         if(ts + 86400000 > System.currentTimeMillis()){
             long temp = System.currentTimeMillis() - ts;
             if(temp < 60000){
-                return temp/1000+"초 전";
+                return "방금 전";
             } else if(temp < 3600000){
                 return temp/60000+"분 전";
             } else{

@@ -24,7 +24,7 @@
         android:id="@+id/cl_win_or_loss"
         android:layout_width="60dp"
         android:layout_height="match_parent"
-        android:background="#1C36DF"
+        android:background="#5383E9"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

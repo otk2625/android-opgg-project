@@ -107,7 +107,7 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
 
 
         //사용자 있는지 체크
-        if(at.loginUser != null){
+        if(at.loginUser != null && at.loginUser.getUsername() == board.getUser().getUsername()){
             btn_delete.setVisibility(View.VISIBLE);
             btn_update.setVisibility(View.VISIBLE);
         }

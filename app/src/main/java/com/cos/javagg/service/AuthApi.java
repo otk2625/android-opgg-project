@@ -1,6 +1,7 @@
 package com.cos.javagg.service;
 
 import com.cos.javagg.dto.CMRespDto;
+import com.cos.javagg.dto.FaceBookLoginDto;
 import com.cos.javagg.dto.JoinDto;
 import com.cos.javagg.dto.LoginDto;
 import com.cos.javagg.model.user.User;
@@ -19,6 +20,9 @@ public interface AuthApi {
 
     @POST("/join")
     Call<CMRespDto<String>> getJoin(@Body JoinDto joinDto);
+
+    @POST("/login/facebook")
+    Call<CMRespDto<User>> getLoginFaceBook(@Body FaceBookLoginDto faceBookLoginDto);
 
 
 

@@ -50,7 +50,7 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
     private DrawerLayout dl_community;
     private NavigationView nv_community;
     private CommunityAdapter communityAdapter;
-    private FontTextView ftvPost, ftv_login;
+    private FontTextView ftvPost, ftv_search;
     private static final String TAG = "CommunityFragment";
     private Button btn_favorite, btn_new, btn_top;
     private MainActivity at;
@@ -216,7 +216,7 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
         rvPostList = (RecyclerView) view.findViewById(R.id.rv_post_list);
         ftvPost = view.findViewById(R.id.ftv_post);
 
-        ftv_login = view.findViewById(R.id.ftv_login);
+        ftv_search = view.findViewById(R.id.ftv_search);
 
         dl_community = (DrawerLayout) view.findViewById(R.id.dl_community);
         nv_community = (NavigationView) view.findViewById(R.id.nv_community);
@@ -259,6 +259,32 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
                 at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MakePostFragment()).commit();
             }
 
+        });
+
+        ftv_search.setOnClickListener(view -> {
+            dl_community.openDrawer(GravityCompat.END);
+
+            //헤더 뷰 접근
+            View headerView = nv_community.getHeaderView(0);
+            Button login = headerView.findViewById(R.id.btn_nav_login);
+            if (at.loginUser == null){
+                login.setText("로그인");
+                login.setOnClickListener(v1 -> {
+                    Log.d(TAG, "listen: 로그인 클릭됨");
+                    dl_community.closeDrawer(GravityCompat.END);
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                });
+
+            } else {
+                login.setText("로그아웃");
+                login.setOnClickListener(v1 -> {
+                    MainActivity.loginUser = null;
+                    dl_community.closeDrawer(GravityCompat.END);
+                    Toast.makeText(at, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
+                });
+
+            }
         });
 
         btn_favorite.setOnClickListener(v -> {

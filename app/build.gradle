@@ -71,6 +71,9 @@ dependencies {
     //http text view
     implementation 'org.sufficientlysecure:html-textview:4.0'
 
+    //페이스북 SDK 추가
+    implementation 'com.facebook.android:facebook-login:[5,6)'
+
 
 
 }
