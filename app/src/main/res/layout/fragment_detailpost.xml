@@ -135,7 +135,7 @@
             app:layout_constraintTop_toTopOf="@+id/tv_reply_count" />
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/tv_likescount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -182,13 +182,12 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_replyup"
+            android:id="@+id/btn_like"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_marginStart="80dp"
             android:background="@drawable/btn_1"
             android:drawableLeft="@drawable/ic_arrow"
-
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:text="0"
@@ -198,7 +197,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_replydown"
+            android:id="@+id/btn_unLike"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:paddingLeft="30dp"
@@ -212,8 +211,8 @@
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.07"
-            app:layout_constraintStart_toEndOf="@+id/btn_replyup"
-            app:layout_constraintTop_toTopOf="@+id/btn_replyup" />
+            app:layout_constraintStart_toEndOf="@+id/btn_like"
+            app:layout_constraintTop_toTopOf="@+id/btn_like" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View

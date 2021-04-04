@@ -1,11 +1,13 @@
 package com.cos.javagg.model.board;
 
+import com.cos.javagg.model.like.Likes;
 import com.cos.javagg.model.reply.Reply;
 import com.cos.javagg.model.user.User;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+import kotlin.jvm.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,6 +35,10 @@ public class Board {
     private User user;
 
     private List<Reply> replys;
+
+    private List<Likes> likes; //A이미지에 홍길동, 장보고, 임꺽정 좋아요. (고소영)
+
+    private boolean likeState;
 
     private Timestamp createDate;
 }

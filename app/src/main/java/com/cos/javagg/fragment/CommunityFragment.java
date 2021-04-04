@@ -84,14 +84,31 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
 
 
         communityApi = CommunityApi.retrofit.create(CommunityApi.class);
-        call = communityApi.findAll(page);
 
+
+        call = communityApi.findAll(page);
         call.enqueue(new Callback<CMRespDto<List<Board>>>() {
             @Override
             public void onResponse(Call<CMRespDto<List<Board>>> call, Response<CMRespDto<List<Board>>> response) {
                 CMRespDto<List<Board>> cmRespDto = response.body();
                 boards = cmRespDto.getData();
 
+                //좋아요 로직
+                if(at.loginUser != null){
+                    for (int i =0; i<boards.size(); i++){
+                        int likeCount = boards.get(i).getLikes().size();
+                        boards.get(i).setLikeCount(likeCount);
+
+                        for(int j = 0; j<boards.get(i).getLikes().size(); j++){
+
+                            if( boards.get(i).getLikes().get(j).getUser().getId() == at.loginUser.getId()) {
+                                boards.get(i).setLikeState(true);
+
+                            }
+                        }
+
+                    }
+                }
 
 
                 //여기서 어댑터 전달
@@ -145,7 +162,27 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
                                     CMRespDto<List<Board>> cmRespDto = response.body();
 
                                     if(cmRespDto.getResultCode() == 1){
+
                                         addBoards = cmRespDto.getData();
+
+                                        //좋아요 로직
+                                        if(at.loginUser != null){
+                                            for (int i =0; i<addBoards.size(); i++){
+                                                int likeCount = addBoards.get(i).getLikes().size();
+                                                addBoards.get(i).setLikeCount(likeCount);
+
+                                                for(int j = 0; j<addBoards.get(i).getLikes().size(); j++){
+
+                                                    if( addBoards.get(i).getLikes().get(j).getUser().getId() == at.loginUser.getId()) {
+                                                        addBoards.get(i).setLikeState(true);
+
+                                                    }
+                                                }
+
+                                            }
+                                        }
+
+
                                         Log.d(TAG, "onResponse: 동작함" + cmRespDto.getData().toString());
                                     }else{
                                         Log.d(TAG, "onResponse: 이거 널값인데");

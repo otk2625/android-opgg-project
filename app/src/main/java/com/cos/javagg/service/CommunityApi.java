@@ -43,6 +43,15 @@ public interface CommunityApi {
     @DELETE("/reply/{id}")
     Call<CMRespDto<String>> replyDelete(@Path(value = "id") int id);
 
+    @POST("/likes/{boardId}")
+    Call<CMRespDto<Integer>> likes(@Path(value = "boardId") int boardId, @Body int userId);
+
+    @DELETE("/likes/{likesId}")
+    Call<CMRespDto<String>> unlikes(@Path(value = "likesId") int boardId);
+
+    @POST("/likesId/{boardId}")
+    Call<CMRespDto<Integer>> likesId(@Path(value = "boardId") int boardId, @Body int userId);
+
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://192.168.25.18:8080")
             .addConverterFactory(GsonConverterFactory.create())

@@ -2,6 +2,7 @@ package com.cos.javagg.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = "CommunityAdapter";
     private final List<Board> boards;
     private MainActivity at;
     private CommunityApi communityApi;
@@ -154,6 +156,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
 
             });
+
+
+
         }
 
         private void findById(View itemView) {
@@ -182,6 +187,13 @@ public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }else{
                 tv_reply_ccccount.setText("["+board.getReplys().size()+"]");
             }
+
+            if(board.isLikeState() == true){
+                ftv_likebtn.setTextColor(Color.GREEN);
+            }else{
+                ftv_likebtn.setTextColor(Color.rgb(170,170,170));
+            }
+            Log.d(TAG, "listener: board가 null이냐?" + board.toString());
         }
     }
 

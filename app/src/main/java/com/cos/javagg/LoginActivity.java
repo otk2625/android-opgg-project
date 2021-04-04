@@ -253,18 +253,20 @@ public class LoginActivity extends AppCompatActivity {
 
                            builder.setTitle("").setMessage("로그인 완료");
 
-                           builder.setNegativeButton("닫기",null);
+                           builder.setNegativeButton("닫기",(dialogInterface, i) -> {
+                               Gson gson = new Gson();
+                               Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
+                               User user = cmRespDto.getData();
+                               newIntent.putExtra("auth",gson.toJson(user));
+
+                               startActivity(newIntent);
+                               finish();
+                           });
 
                            AlertDialog alertDialog = builder.create();
                            alertDialog.show();
 
-                           Gson gson = new Gson();
-                           Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
-                           User user = cmRespDto.getData();
-                           newIntent.putExtra("auth",gson.toJson(user));
 
-                           startActivity(newIntent);
-                           finish();
                        } else{
                            Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호를 확인해 주세종", Toast.LENGTH_SHORT).show();
                        }

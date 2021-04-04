@@ -2,6 +2,7 @@ package com.cos.javagg.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -60,60 +62,32 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
     private Button btn_delete, btn_update, btn_replysave;
     private  MainActivity at;
     private TextView tv_detail_title, tv_detail_createdate, tv_detail_username, tv_detail_content, tv_detail_postkind, tv_readcount
-            ,tv_reply_total_count, tv_reply_count;
+            ,tv_reply_total_count, tv_reply_count, tv_likescount;
     private HtmlTextView htmlTextView; //내용임
     private EditText et_replycontent;
     private CommunityApi communityApi;
     private Call<CMRespDto<Board>> call;
     private Call<CMRespDto<String>> call2;
+    private Call<CMRespDto<Integer>> call3;
+    private Call<CMRespDto<Integer>> call4;
     private Board board;
     private DrawerLayout dl_community_detail;
     private NavigationView nv_community_detail;
+    private AppCompatButton btn_unLike, btn_like;
+    private int likeId = 0;
+    private boolean toogleBtn = false;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         at = (MainActivity)container.getContext();
-
         setHasOptionsMenu(true);
-
         View view = inflater.inflate(R.layout.fragment_detailpost,container,false);
+
         findById(view);
 
-        //toolBar를 통해 App Bar 생성
-        Toolbar toolbar = view.findViewById(R.id.tb_community_detail);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
-        //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Incon 추가
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
-
-        //필요없음
-//        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-//                ((AppCompatActivity)getActivity()),
-//                dl_community_detail,
-//                toolbar,
-//                R.string.drawer_open,
-//                R.string.drawer_close
-//        );
-//
-//        dl_community_detail.addDrawerListener(actionBarDrawerToggle);
-        nv_community_detail.setNavigationItemSelectedListener(this::onNavigationItemSelected);
-
-
-
-
-        //사용자 있는지 체크
-        if(at.loginUser != null && at.loginUser.getUsername() == board.getUser().getUsername()){
-            btn_delete.setVisibility(View.VISIBLE);
-            btn_update.setVisibility(View.VISIBLE);
-        }
-
-        communityApi = CommunityApi.retrofit.create(CommunityApi.class);
-
+        //툴바 세팅
+        toolBarSetting(view);
 
         //데이터 뿌리기
         dataset();
@@ -130,11 +104,44 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
             rvReplyList.setAdapter(replyAdapter);
         }
 
+        //사용자 있는지 체크
+        if(at.loginUser == null){
 
+        }else{
+            if(at.loginUser.getId() == board.getUser().getId() ){
+                btn_delete.setVisibility(View.VISIBLE);
+                btn_update.setVisibility(View.VISIBLE);
+            }
+        }
+
+        //좋아요 버튼 관리
+        if(board.isLikeState() == true){
+            btn_like.setBackgroundColor(Color.parseColor("#30DAA4"));
+            toogleBtn = true;
+        }else{
+            //btn_like.setBackgroundColor(Color.parseColor("#C5CBD0"));
+            btn_like.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            toogleBtn = false;
+        }
 
         listener(view);
 
         return view;
+    }
+
+    private void toolBarSetting(View view) {
+        //toolBar를 통해 App Bar 생성
+        Toolbar toolbar = view.findViewById(R.id.tb_community_detail);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+        //App Bar의 좌측 영영에 Drawer를 Open 하기 위한 Incon 추가
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
+        nv_community_detail.setNavigationItemSelectedListener(this::onNavigationItemSelected);
+        communityApi = CommunityApi.retrofit.create(CommunityApi.class);
     }
 
     private void dataset() {
@@ -159,12 +166,19 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
         }
 
 
+        tv_likescount.setText(board.getLikes().size()+"");
+
+        btn_like.setText(board.getLikeCount()+"");
+
     }
 
     public void findById(View view){
         //어댑터
         rvReplyList = (RecyclerView) view.findViewById(R.id.rv_reply_list);
 
+        //좋아요 싫어요 버튼
+        btn_unLike = view.findViewById(R.id.btn_unLike);
+        btn_like = view.findViewById(R.id.btn_like);
 
         et_replycontent = view.findViewById(R.id.et_replycontent);
         btn_replysave = view.findViewById(R.id.btn_replysave);
@@ -189,6 +203,9 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
 
         dl_community_detail = (DrawerLayout) view.findViewById(R.id.dl_community_detail);
         nv_community_detail = (NavigationView) view.findViewById(R.id.nv_community_detail);
+
+        //좋아요 개수
+        tv_likescount = view.findViewById(R.id.tv_likescount);
     }
 
     public void listener(View view){
@@ -236,11 +253,6 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
             }
         });
 
-        //뒤로가기 버튼
-//        ftvAddBack.setOnClickListener(v -> {
-//            at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommunityFragment()).commit();
-//        });
-
         //삭제 버튼
         btn_delete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(at);
@@ -285,6 +297,96 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
         //수정클릭
         btn_update.setOnClickListener(v -> {
             at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new updatePostFragment()).commit();
+        });
+
+        //좋아요 버튼
+        btn_like.setOnClickListener(view1 -> {
+            if(MainActivity.loginUser != null){
+                if(board.isLikeState()){
+                    //지금 좋아요 되어있다는뜻 눌렀을때 삭제 되어야함
+                    call4 = communityApi.likesId(board.getId(), MainActivity.loginUser.getId());
+                    call4.enqueue(new Callback<CMRespDto<Integer>>() {
+                        @Override
+                        public void onResponse(Call<CMRespDto<Integer>> call, Response<CMRespDto<Integer>> response) {
+                            CMRespDto<Integer> cmRespDto = response.body();
+
+                            Log.d(TAG, "onResponse: 좋아요 id" + cmRespDto.getData());
+
+                            likeId = cmRespDto.getData();
+                            call2 = communityApi.unlikes(likeId);
+                            call2.enqueue(new Callback<CMRespDto<String>>() {
+                                @Override
+                                public void onResponse(Call<CMRespDto<String>> call, Response<CMRespDto<String>> response) {
+                                    int lkes = Integer.parseInt(btn_like.getText().toString());
+                                    lkes--;
+                                    btn_like.setText(lkes+"");
+
+                                    board.setLikeState(false);
+                                    btn_like.setBackgroundColor(Color.parseColor("#C5CBD0"));
+
+                                    toogleBtn = false;
+                                    likeId = 0;
+                                }
+
+                                @Override
+                                public void onFailure(Call<CMRespDto<String>> call, Throwable t) {
+
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<CMRespDto<Integer>> call, Throwable t) {
+
+                        }
+                    });
+
+
+                }else{
+                    call3 = communityApi.likes(board.getId(), MainActivity.loginUser.getId());
+                    call3.enqueue(new Callback<CMRespDto<Integer>>() {
+                        @Override
+                        public void onResponse(Call<CMRespDto<Integer>> call, Response<CMRespDto<Integer>> response) {
+                            CMRespDto<Integer> cmRespDto = response.body();
+
+                            int likes = Integer.parseInt(btn_like.getText()+"");
+                            Log.d(TAG, "onResponse: likes숫자" + likes+1);
+                            likes++;
+                            btn_like.setText(likes+"");
+
+                            likeId = cmRespDto.getData();
+
+                            board.setLikeState(true);
+                            btn_like.setBackgroundColor(Color.parseColor("#30DAA4"));
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<CMRespDto<Integer>> call, Throwable t) {
+
+                        }
+                    });
+                }
+
+            }else{
+                Toast.makeText(at, "로그인이 필요한 서비스입니다", Toast.LENGTH_SHORT).show();
+            }
+
+
+        });
+
+        //싫어요 버튼
+        btn_unLike.setOnClickListener(view1 -> {
+            if(MainActivity.loginUser != null){
+
+
+                Log.d(TAG, "listener: 아니 좋아요 아이디 먼데 : " + likeId);
+
+
+            }else{
+                Toast.makeText(at, "로그인이 필요한 서비스입니다", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
