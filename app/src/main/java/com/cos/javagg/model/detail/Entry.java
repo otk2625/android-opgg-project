@@ -22,4 +22,6 @@ public class Entry {
     public boolean freshBlood;
     public boolean hotStreak;
 
+
+
 }

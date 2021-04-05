@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="30dp"
+    android:layout_height="65dp"
     android:layout_marginRight="10dp"
     android:paddingLeft="10dp">
 
     <TextView
-        android:id="@+id/rank"
+        android:id="@+id/tv_rank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="10dp"
+        android:textSize="15dp"
         android:text="순위" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_rankImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
+
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/tv_ranked_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -30,17 +40,17 @@
         >
 
         <TextView
-            android:id="@+id/tier"
+            android:id="@+id/tv_tier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:textSize="10dp"
+            android:textSize="15dp"
             android:text="티어" />
         <TextView
-            android:id="@+id/lp"
+            android:id="@+id/tv_lp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
+            android:textSize="15dp"
             android:text="LP"/>
 
 

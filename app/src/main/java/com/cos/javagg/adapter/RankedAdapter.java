@@ -9,38 +9,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.cos.javagg.MainActivity;
 import com.cos.javagg.R;
+import com.cos.javagg.dto.CMRespDto;
+import com.cos.javagg.dto.RankingDto;
+import com.cos.javagg.model.api.ApiMatch;
+import com.cos.javagg.model.api.ApiSummoner;
+import com.cos.javagg.model.detail.Entry;
+import com.cos.javagg.service.SummonerApi;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RankedAdapter extends RecyclerView.Adapter<RankedAdapter.ViewHolder> {
 
-    private ArrayList<String> mData = null;
+    private  List<RankingDto> rankingDtos;
+    private static int rank = 1;
+    private MainActivity at;
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView mrank;
-        TextView mname;
-        TextView mtier;
-        TextView mlp;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mrank = itemView.findViewById(R.id.rank);
-            mname = itemView.findViewById(R.id.name);
-            mtier = itemView.findViewById(R.id.tier);
-            mlp = itemView.findViewById(R.id.lp);
-
-        }
-    }
-
-    public RankedAdapter(ArrayList<String> mData) {
-        this.mData = mData;
+    public RankedAdapter( List<RankingDto> rankingDtos) {
+        this.rankingDtos = rankingDtos;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        at = (MainActivity)parent.getContext();
         Context context = parent.getContext() ;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
 
@@ -52,17 +52,69 @@ public class RankedAdapter extends RecyclerView.Adapter<RankedAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String text = mData.get(position) ;
-        holder.mrank.setText(text) ;
-        holder.mname.setText(text);
-        holder.mtier.setText(text);
-        holder.mlp.setText(text);
+
+        holder.setItem(rankingDtos.get(position), rank);
+        rank++;
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return rankingDtos.size();
     }
 
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView mrank;
+        private TextView mname;
+        private TextView mtier;
+        private TextView mlp;
+        private Call<CMRespDto<ApiSummoner>> call;
+        private SummonerApi summonerApi;
+        private CircleImageView iv_rankImage;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mrank = itemView.findViewById(R.id.tv_rank);
+            mname = itemView.findViewById(R.id.tv_ranked_name);
+            mtier = itemView.findViewById(R.id.tv_tier);
+            mlp = itemView.findViewById(R.id.tv_lp);
+            iv_rankImage = itemView.findViewById(R.id.iv_rankImage);
+            summonerApi = SummonerApi.retrofit.create(SummonerApi.class);
+
+        }
+
+        public void setItem(RankingDto rankingDto, int rank) {
+            mrank.setText(rankingDto.getRank()+"");
+            mname.setText(rankingDto.getSummonerName());
+            mtier.setText("CHALLENGER");
+            mlp.setText(rankingDto.getLeaguePoints()+"");
+
+
+               rankingDto.getSummonerName().replaceAll(" ","");
+               call = summonerApi.getRankSummoner(rankingDto.getSummonerId());
+
+               call.enqueue(new Callback<CMRespDto<ApiSummoner>>() {
+                   @Override
+                   public void onResponse(Call<CMRespDto<ApiSummoner>> call, Response<CMRespDto<ApiSummoner>> response) {
+                       CMRespDto<ApiSummoner> cmRespDto = response.body();
+
+                       if(cmRespDto.getData().getProfileIconId()+"" != null){
+                           Glide
+                                   .with(at)
+                                   .load("http://ddragon.leagueoflegends.com/cdn/11.7.1/img/profileicon/"+cmRespDto.getData().getProfileIconId()+".png")
+                                   .centerCrop()
+                                   .into(iv_rankImage);
+                       }
+
+                   }
+
+                   @Override
+                   public void onFailure(Call<CMRespDto<ApiSummoner>> call, Throwable t) {
+
+                   }
+               });
+           }
+
+
+    }
 }

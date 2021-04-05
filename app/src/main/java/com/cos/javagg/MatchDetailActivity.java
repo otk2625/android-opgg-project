@@ -48,7 +48,7 @@ public class MatchDetailActivity extends AppCompatActivity {
     private List<Participant> winTeamList;
     private List<Participant> loseTeamList;
     private ParticipantIdentity participantIdentity;
-    private String queueType; //420솔랭, 430일반, 440무작위
+    private String queueType; //420솔랭, 430일반, 440무작위, 1020 단일
     private Calcu cal = new Calcu();
 
     @Override
@@ -132,6 +132,8 @@ public class MatchDetailActivity extends AppCompatActivity {
                     tv_detail_header_queuetype.setText("솔랭");
                 }else if(queueType.equals("430")){
                     tv_detail_header_queuetype.setText("일반");
+                }else if(queueType.equals("1020")){
+                    tv_detail_header_queuetype.setText("단일 챔피언");
                 }else {
                     tv_detail_header_queuetype.setText("칼바람");
                 }

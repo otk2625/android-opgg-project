@@ -35,7 +35,7 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.MyVi
     private final ApiMatchEntry apiMatchEntry;
     private SearchResultActivity sr;
     private ChampionList championList = new ChampionList();
-    private String queueType; //420솔랭, 430일반, 440무작위
+    private String queueType; //420솔랭, 430일반, 440무작위, 1020 단일 챔피언
 
 
 
@@ -153,6 +153,8 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.MyVi
                                 tvGameType.setText("솔랭");
                             }else if(queueType.equals("430")){
                                 tvGameType.setText("일반");
+                            }else if(queueType.equals("1020")){
+                                tvGameType.setText("단일 챔피언");
                             }else {
                                 tvGameType.setText("칼바람");
                             }

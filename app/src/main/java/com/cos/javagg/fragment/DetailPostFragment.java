@@ -114,15 +114,7 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
             }
         }
 
-        //좋아요 버튼 관리
-        if(board.isLikeState() == true){
-            btn_like.setBackgroundColor(Color.parseColor("#30DAA4"));
-            toogleBtn = true;
-        }else{
-            //btn_like.setBackgroundColor(Color.parseColor("#C5CBD0"));
-            btn_like.setBackgroundColor(Color.parseColor("#FFFFFF"));
-            toogleBtn = false;
-        }
+
 
         listener(view);
 
@@ -168,7 +160,19 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
 
         tv_likescount.setText(board.getLikes().size()+"");
 
-        btn_like.setText(board.getLikeCount()+"");
+        btn_like.setText(board.getLikes().size()+"");
+        //좋아요 버튼 관리
+        if(board.isLikeState() == true){
+            btn_like.setBackgroundColor(Color.parseColor("#30DAA4"));
+            btn_like.setText(board.getLikeCount()+"");
+            toogleBtn = true;
+        }else{
+            //btn_like.setBackgroundColor(Color.parseColor("#C5CBD0"));
+            btn_like.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            toogleBtn = false;
+        }
+
+        //btn_like.setText(board.getLikeCount()+"");
 
     }
 
@@ -235,6 +239,13 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
                                 //새로고침
                                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                                 ft.detach(DetailPostFragment.this).attach(DetailPostFragment.this).commit();
+
+                                btn_like.setText(MainActivity.board.getLikeCount()+"");
+                                if(MainActivity.board.isLikeState()){
+                                    btn_like.setBackgroundColor(Color.parseColor("#30DAA4"));
+                                }else{
+                                    btn_like.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                                }
 
                                 et_replycontent.setText("");
                                 Toast.makeText(at, "댓글쓰기 완료", Toast.LENGTH_SHORT).show();
@@ -324,6 +335,10 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
                                     board.setLikeState(false);
                                     btn_like.setBackgroundColor(Color.parseColor("#C5CBD0"));
 
+                                    int count = Integer.parseInt(tv_likescount.getText()+"");
+                                    count--;
+                                    tv_likescount.setText(count+"");
+
                                     toogleBtn = false;
                                     likeId = 0;
                                 }
@@ -356,6 +371,10 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
                             btn_like.setText(likes+"");
 
                             likeId = cmRespDto.getData();
+
+                            int count = Integer.parseInt(tv_likescount.getText()+"");
+                            count++;
+                            tv_likescount.setText(count+"");
 
                             board.setLikeState(true);
                             btn_like.setBackgroundColor(Color.parseColor("#30DAA4"));
