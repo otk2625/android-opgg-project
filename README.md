@@ -20,6 +20,10 @@
 ![image](https://user-images.githubusercontent.com/67199138/113722876-c9cd6080-972b-11eb-93fa-71a787561d9c.png)
 ![image](https://user-images.githubusercontent.com/67199138/113722906-d05bd800-972b-11eb-9642-2d4098ef7c05.png)
 
+### 로그인, 회원가입
+
+### 커뮤니티
+
 ### 안드로이드 서버
 - https://github.com/otk2625/springboot-javagg-testserver
 
