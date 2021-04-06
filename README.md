@@ -11,6 +11,11 @@
 - 커뮤니티 기능 구현(게시물 CRUD)
 - 댓글기능, 좋아요 기능
 
+### 주요 화면
+
+### 홈
+![image](https://user-images.githubusercontent.com/67199138/113722522-76f3a900-972b-11eb-9cec-a740303d2d57.png)
+
 ### 안드로이드 서버
 - 
 
