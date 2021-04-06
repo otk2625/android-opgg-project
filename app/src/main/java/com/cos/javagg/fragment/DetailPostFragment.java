@@ -66,7 +66,7 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
     private HtmlTextView htmlTextView; //내용임
     private EditText et_replycontent;
     private CommunityApi communityApi;
-    private Call<CMRespDto<Board>> call;
+    private Call<CMRespDto<Reply>> call;
     private Call<CMRespDto<String>> call2;
     private Call<CMRespDto<Integer>> call3;
     private Call<CMRespDto<Integer>> call4;
@@ -233,33 +233,28 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
                             .build();
 
                     call = communityApi.reply(replyDto);
-                    call.enqueue(new Callback<CMRespDto<Board>>() {
+                    call.enqueue(new Callback<CMRespDto<Reply>>() {
                         @Override
-                        public void onResponse(Call<CMRespDto<Board>> call, Response<CMRespDto<Board>> response) {
+                        public void onResponse(Call<CMRespDto<Reply>> call, Response<CMRespDto<Reply>> response) {
                             //댓글 성공시
 
-                            CMRespDto<Board> cmRespDto = response.body();
+                            CMRespDto<Reply> cmRespDto = response.body();
 
-                            MainActivity.board = cmRespDto.getData();
+                            replyAdapter.addItem(cmRespDto.getData());
+                            Log.d(TAG, "onResponse: 댓글" + cmRespDto.getData().toString());
 
-                                //새로고침
-                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                ft.detach(DetailPostFragment.this).attach(DetailPostFragment.this).commit();
+                            et_replycontent.setText("");
+                            Toast.makeText(at, "댓글쓰기 완료", Toast.LENGTH_SHORT).show();
 
-                                btn_like.setText(MainActivity.board.getLikeCount()+"");
-                                if(MainActivity.board.isLikeState()){
-                                    btn_like.setBackgroundColor(Color.parseColor("#30DAA4"));
-                                }else{
-                                    btn_like.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                }
+                            int count1 = Integer.parseInt(tv_reply_total_count.getText()+"");
+                            tv_reply_total_count.setText(count1++ + "");
 
-                                et_replycontent.setText("");
-                                Toast.makeText(at, "댓글쓰기 완료", Toast.LENGTH_SHORT).show();
-                            //at.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CommunityFragment()).commit();
+                            int count2 = Integer.parseInt(tv_reply_count.getText()+"");
+                            tv_reply_count.setText(count2++ + "");
                         }
 
                         @Override
-                        public void onFailure(Call<CMRespDto<Board>> call, Throwable t) {
+                        public void onFailure(Call<CMRespDto<Reply>> call, Throwable t) {
 
                         }
                     });

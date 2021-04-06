@@ -48,6 +48,11 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.MyViewHolder
 
     }
 
+    public void addItem(Reply reply){
+        replies.add(reply);
+        notifyDataSetChanged();
+    }
+
     public void removeItem(int position){
         replies.remove(position);
         notifyItemRemoved(position);

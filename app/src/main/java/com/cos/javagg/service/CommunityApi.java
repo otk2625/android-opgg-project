@@ -5,6 +5,7 @@ import com.cos.javagg.dto.CMRespDto;
 import com.cos.javagg.dto.BoardDto;
 import com.cos.javagg.dto.ReplyDto;
 import com.cos.javagg.model.board.Board;
+import com.cos.javagg.model.reply.Reply;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public interface CommunityApi {
     Call<CMRespDto<Board>> count(@Path(value = "id") int id);
 
     @POST("/reply")
-    Call<CMRespDto<Board>> reply(@Body ReplyDto replyDto);
+    Call<CMRespDto<Reply>> reply(@Body ReplyDto replyDto);
 
     @DELETE("/reply/{id}")
     Call<CMRespDto<String>> replyDelete(@Path(value = "id") int id);
