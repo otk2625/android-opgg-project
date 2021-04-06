@@ -21,7 +21,7 @@
 ![image](https://user-images.githubusercontent.com/67199138/113722906-d05bd800-972b-11eb-9642-2d4098ef7c05.png)
 
 ### 안드로이드 서버
-- 
+- https://github.com/otk2625/springboot-javagg-testserver
 
 ### JAVAGG 웹
 - https://github.com/KuTaeMo/JAVA.GG---JSP
