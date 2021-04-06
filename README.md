@@ -30,7 +30,7 @@
 ![image](https://user-images.githubusercontent.com/67199138/113723838-b4a50180-972c-11eb-9c7c-16dab40db01e.png)
 
 ### 랭킹
-
+![image](https://user-images.githubusercontent.com/67199138/113723978-da320b00-972c-11eb-983a-6e54639bcac1.png)
 
 ### 안드로이드 서버
 - https://github.com/otk2625/springboot-javagg-testserver
