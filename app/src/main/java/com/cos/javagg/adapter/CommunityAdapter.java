@@ -104,7 +104,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView tv_title, tv_postkinds, tv_posthoursago, tv_postusername, tv_postlikecount, tv_reply_ccccount;
+        private TextView tv_title, tv_postkinds, tv_posthoursago, tv_postusername, tv_postlikecount, tv_reply_ccccount, tv_reply_likecount;
         private Board board;
         private FontTextView ftv_likebtn;
         private boolean togle = false;
@@ -172,6 +172,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ftv_likebtn = itemView.findViewById(R.id.ftv_likebtn);
 
             tv_reply_ccccount = itemView.findViewById(R.id.tv_reply_ccccount);
+
+            tv_reply_likecount = itemView.findViewById(R.id.tv_reply_likecount);
         }
 
         public void setItem(Board board) {
@@ -181,6 +183,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tv_posthoursago.setText(Calcu.getDate(board.getCreateDate()));
             tv_postusername.setText(board.getUser().getUsername());
             tv_postlikecount.setText(board.getLikeCount()+"");
+            tv_reply_likecount.setText(board.getLikes().size()+"");
 
             if(board.getReplys() == null){
                 tv_reply_ccccount.setText("");
