@@ -188,11 +188,16 @@ public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 tv_reply_ccccount.setText("["+board.getReplys().size()+"]");
             }
 
-            if(board.isLikeState() == true){
-                ftv_likebtn.setTextColor(Color.GREEN);
+            if(MainActivity.loginUser != null){
+                if(board.isLikeState() == true){
+                    ftv_likebtn.setTextColor(Color.GREEN);
+                }else{
+                    ftv_likebtn.setTextColor(Color.rgb(170,170,170));
+                }
             }else{
                 ftv_likebtn.setTextColor(Color.rgb(170,170,170));
             }
+
             Log.d(TAG, "listener: board가 null이냐?" + board.toString());
         }
     }

@@ -37,11 +37,18 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
     private MatchDetailActivity md;
     private ChampionList championList = new ChampionList();
     private Calcu cal= new Calcu();
+    private long totalDamage = 0;
 
     public MatchDetailLossListAdapter(List<Participant> participants, List<ParticipantIdentity> participantIdentities, long duration) {
         this.participants = participants;
         this.participantIdentities = participantIdentities;
         this.duration = duration;
+
+        for(int i = 0; i<participants.size(); i++){
+            if(participants.get(i).getStats().getTotalDamageDealt() > totalDamage){
+                this.totalDamage = participants.get(i).getStats().getTotalDamageDealt();
+            }
+        }
     }
 
     @NonNull
@@ -57,7 +64,7 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.setItem(participants.get(position));
+        holder.setItem(participants.get(position), totalDamage);
     }
 
     @Override
@@ -70,7 +77,7 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
         private ImageView iv_detail_spell1, iv_detail_spell2, iv_detail_perk1, iv_detail_perk2, iv_detail_item0, iv_detail_item1,
                 iv_detail_item2, iv_detail_item3, iv_detail_item4 ,iv_detail_item5, iv_detail_item6;
         private TextView iv_detail_summoner, iv_detail_kill, iv_detail_death, iv_detail_assist, iv_detail_grade,
-                iv_detail_cs, tv_assist_solo, iv_detail_gold;
+                iv_detail_cs, tv_assist_solo, iv_detail_gold, iv_detail_deal;
         private AppCompatButton iv_detail_champ_level;
         private ProgressBar pg_detail;
 
@@ -81,7 +88,7 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
 
         }
 
-        public void setItem(Participant participant){
+        public void setItem(Participant participant, long totalDamage){
             //챔피온, 스펠, 특성
             String champ = championList.getChampName(participant.getChampionId());
             loadChampImages(champ, ivDetailChampion);
@@ -128,6 +135,10 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
             getPerk(participant.getStats().getPerkPrimaryStyle()+"", iv_detail_perk1);
             getPerk(participant.getStats().getPerkSubStyle()+"", iv_detail_perk2);
 
+            //데미지
+            pg_detail.setMax((int) totalDamage);
+            pg_detail.setProgress((int) participant.getStats().getTotalDamageDealt());
+            iv_detail_deal.setText(participant.getStats().getTotalDamageDealt()+"");
         }
 
         public void findById(View itemView){
@@ -154,6 +165,7 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
             tv_assist_solo = itemView.findViewById(R.id.tv_assist_solo);
             iv_detail_gold = itemView.findViewById(R.id.iv_detail_gold);
             pg_detail = itemView.findViewById(R.id.pg_detail);
+            iv_detail_deal = itemView.findViewById(R.id.iv_detail_deal);
         }
 
         //https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/Electrocute/Electrocute.png

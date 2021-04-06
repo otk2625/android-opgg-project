@@ -319,6 +319,9 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
                     MainActivity.loginUser = null;
                     dl_community.closeDrawer(GravityCompat.END);
                     Toast.makeText(at, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
+
+
+
                 });
 
             }
@@ -344,6 +347,9 @@ public class CommunityFragment extends Fragment implements NavigationView.OnNavi
             case R.id.menu_funny:
                 Log.d(TAG, "onNavigationItemSelected: 클릭됨");
                 Toast.makeText(at, "item1 clicked..", Toast.LENGTH_SHORT).show();
+
+
+
                 break;
             case R.id.menu_free:
                 Toast.makeText(at, "item2 clicked..", Toast.LENGTH_SHORT).show();

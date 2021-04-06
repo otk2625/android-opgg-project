@@ -63,6 +63,11 @@ public class SearchResultActivity extends AppCompatActivity {
 
 
         task = new CheckTypesTask();
+        progressBar.setIndeterminate(false);
+        progressBar.setProgress(100);
+
+        task.execute();
+
 
         infoFindByName(summonerName);
         toolbarsetting();
@@ -117,10 +122,6 @@ public class SearchResultActivity extends AppCompatActivity {
                 CMRespDto<LoLDto> cmRespDto = response.body();
 
                 if(cmRespDto.getResultCode() == 1){
-                    progressBar.setIndeterminate(false);
-                    progressBar.setProgress(100);
-
-                    task.execute();
 
                     ApiSummoner apiSummoner = cmRespDto.getData().getApiSummoner();
                     summonerInfoSetting(apiSummoner);
@@ -136,7 +137,7 @@ public class SearchResultActivity extends AppCompatActivity {
                     List<ApiEntry> apiEntries = cmRespDto.getData().getApiEntries();
                     Log.d(TAG, "onResponse: apiEntries : " + apiEntries);
                     if (apiEntries.isEmpty() == true){
-                        Toast.makeText(SearchResultActivity.this, "비었다리", Toast.LENGTH_SHORT).show();
+
                     }else{
                         rankInfo(apiEntries.get(0));
                     }
@@ -147,19 +148,6 @@ public class SearchResultActivity extends AppCompatActivity {
 
                     finish();
                 }
-
-
-
-
-
-
-//                if (apiEntries == null){
-//                    rankInfo(new ApiEntry());
-//                }else{
-//                    rankInfo(apiEntries.get(0));
-//                }
-
-
 
             }
 

@@ -162,15 +162,21 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
 
         btn_like.setText(board.getLikes().size()+"");
         //좋아요 버튼 관리
-        if(board.isLikeState() == true){
-            btn_like.setBackgroundColor(Color.parseColor("#30DAA4"));
-            btn_like.setText(board.getLikeCount()+"");
-            toogleBtn = true;
+        if(MainActivity.loginUser != null){
+            if(board.isLikeState() == true){
+                btn_like.setBackgroundColor(Color.parseColor("#30DAA4"));
+                btn_like.setText(board.getLikeCount()+"");
+                toogleBtn = true;
+            }else{
+                //btn_like.setBackgroundColor(Color.parseColor("#C5CBD0"));
+                btn_like.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                toogleBtn = false;
+            }
         }else{
-            //btn_like.setBackgroundColor(Color.parseColor("#C5CBD0"));
             btn_like.setBackgroundColor(Color.parseColor("#FFFFFF"));
             toogleBtn = false;
         }
+
 
         //btn_like.setText(board.getLikeCount()+"");
 

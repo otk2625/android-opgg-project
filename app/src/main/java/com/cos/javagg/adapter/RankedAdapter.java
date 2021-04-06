@@ -1,6 +1,8 @@
 package com.cos.javagg.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cos.javagg.MainActivity;
 import com.cos.javagg.R;
+import com.cos.javagg.SearchResultActivity;
 import com.cos.javagg.dto.CMRespDto;
 import com.cos.javagg.dto.RankingDto;
 import com.cos.javagg.model.api.ApiMatch;
@@ -71,6 +74,7 @@ public class RankedAdapter extends RecyclerView.Adapter<RankedAdapter.ViewHolder
         private Call<CMRespDto<ApiSummoner>> call;
         private SummonerApi summonerApi;
         private CircleImageView iv_rankImage;
+        private String sName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,9 +85,17 @@ public class RankedAdapter extends RecyclerView.Adapter<RankedAdapter.ViewHolder
             iv_rankImage = itemView.findViewById(R.id.iv_rankImage);
             summonerApi = SummonerApi.retrofit.create(SummonerApi.class);
 
+            itemView.setOnClickListener(view -> {
+                String 공백제거 = sName.replace(" ", "");
+                Intent intent = new Intent(at, SearchResultActivity.class);
+                intent.putExtra("summonerName", 공백제거);
+                at.startActivity(intent);
+            });
+
         }
 
         public void setItem(RankingDto rankingDto, int rank) {
+            sName = rankingDto.getSummonerName();
             mrank.setText(rankingDto.getRank()+"");
             mname.setText(rankingDto.getSummonerName());
             mtier.setText("CHALLENGER");
