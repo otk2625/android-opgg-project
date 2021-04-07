@@ -127,7 +127,7 @@ public class MakePostFragment extends Fragment {
                 if(spinner_field.getSelectedItemPosition() > 0){
                     //선택된 항목
                     Log.v("알림",spinner_field.getSelectedItem().toString()+ "is selected");
-                    Toast.makeText(at, "이게 뭘까 : " + spinner_field.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+
                     postKinds = spinner_field.getSelectedItem().toString();
                 }
             }

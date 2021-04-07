@@ -1,9 +1,11 @@
 package com.cos.javagg;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,8 @@ import com.cos.javagg.dto.CMRespDto;
 import com.cos.javagg.dto.JoinDto;
 import com.cos.javagg.model.user.User;
 import com.cos.javagg.service.AuthApi;
+import com.facebook.login.LoginManager;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,7 +94,19 @@ public class JoinActivity extends AppCompatActivity {
                         if (cmRespDto.getResultCode() == 1) {
                             //성공
                             isJoin = true;
-                            finish();
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(JoinActivity.this);
+
+                            builder.setTitle("").setMessage("회원가입 완료");
+
+                            builder.setNegativeButton("닫기",(dialogInterface, i) -> {
+
+                                finish();
+                            });
+
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+
                         } else {
                             //실패
                             Toast.makeText(JoinActivity.this, "아이디 중복", Toast.LENGTH_SHORT).show();

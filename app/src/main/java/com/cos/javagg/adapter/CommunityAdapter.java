@@ -121,7 +121,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         private void listener(View itemView) {
             itemView.setOnClickListener(view -> {
-                Toast.makeText(view.getContext(), "이동됨", Toast.LENGTH_SHORT).show();
 
                 MainActivity.board = board;
 

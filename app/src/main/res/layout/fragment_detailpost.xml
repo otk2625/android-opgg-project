@@ -185,34 +185,18 @@
             android:id="@+id/btn_like"
             android:layout_width="120dp"
             android:layout_height="50dp"
-            android:layout_marginStart="80dp"
             android:background="@drawable/btn_1"
             android:drawableLeft="@drawable/ic_arrow"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:text="0"
-            android:textSize="20dp"
             android:textColor="#000000"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_unLike"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:layout_marginStart="12dp"
-            android:background="@drawable/btn_2"
-            android:backgroundTint="@color/white"
-            android:drawableLeft="@drawable/ic_down"
 
-            android:text="0"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.07"
-            app:layout_constraintStart_toEndOf="@+id/btn_like"
-            app:layout_constraintTop_toTopOf="@+id/btn_like" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View

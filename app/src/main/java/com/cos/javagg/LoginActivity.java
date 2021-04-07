@@ -149,22 +149,27 @@ public class LoginActivity extends AppCompatActivity {
                                         if(cmRespDto.getResultCode() == 2){
                                             Toast.makeText(LoginActivity.this, "최초 사용자입니다. 자동 회원가입 후 로그인 합니다", Toast.LENGTH_SHORT).show();
                                             Log.d(TAG, "onResponse: 로그인 정보 : " + cmRespDto.getData().toString());
+
                                             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
-                                            builder.setTitle("").setMessage("최초 사용자입니다. 자동 회원가입 후 로그인 합니다");
+                                            builder.setTitle("").setMessage("로그인 완료");
+
+                                            builder.setNegativeButton("닫기",(dialogInterface, i) -> {
+                                                Gson gson = new Gson();
+                                                Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                                User user = cmRespDto.getData();
+                                                newIntent.putExtra("auth",gson.toJson(user));
+
+                                                LoginManager.getInstance().logOut();
+
+                                                startActivity(newIntent);
+                                                finish();
+                                            });
 
                                             AlertDialog alertDialog = builder.create();
                                             alertDialog.show();
 
-                                            Gson gson = new Gson();
-                                            Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
-                                            User user = cmRespDto.getData();
-                                            newIntent.putExtra("auth",gson.toJson(user));
 
-                                            LoginManager.getInstance().logOut();
-
-                                            startActivity(newIntent);
-                                            finish();
 
                                         }else{
                                             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

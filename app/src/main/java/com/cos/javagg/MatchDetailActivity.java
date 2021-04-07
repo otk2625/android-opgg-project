@@ -202,6 +202,10 @@ public class MatchDetailActivity extends AppCompatActivity {
                 tvDetailWinTeamDeath.setText(teamDeaths+"");
                 tvDetailWinTeamAssist.setText(teamAssists+"");
 
+                teamKills= 0L;
+                teamDeaths= 0L;
+                teamAssists = 0L;
+
                 //진팀
                 for(int i = 0; i<loseTeamList.size(); i++) {
                     teamKills += loseTeamList.get(i).getStats().getKills();

@@ -187,7 +187,7 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
         rvReplyList = (RecyclerView) view.findViewById(R.id.rv_reply_list);
 
         //좋아요 싫어요 버튼
-        btn_unLike = view.findViewById(R.id.btn_unLike);
+        //btn_unLike = view.findViewById(R.id.btn_unLike);
         btn_like = view.findViewById(R.id.btn_like);
 
         et_replycontent = view.findViewById(R.id.et_replycontent);
@@ -397,17 +397,17 @@ public class DetailPostFragment  extends Fragment implements NavigationView.OnNa
         });
 
         //싫어요 버튼
-        btn_unLike.setOnClickListener(view1 -> {
-            if(MainActivity.loginUser != null){
-
-
-                Log.d(TAG, "listener: 아니 좋아요 아이디 먼데 : " + likeId);
-
-
-            }else{
-                Toast.makeText(at, "로그인이 필요한 서비스입니다", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        btn_unLike.setOnClickListener(view1 -> {
+//            if(MainActivity.loginUser != null){
+//
+//
+//                Log.d(TAG, "listener: 아니 좋아요 아이디 먼데 : " + likeId);
+//
+//
+//            }else{
+//                Toast.makeText(at, "로그인이 필요한 서비스입니다", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override

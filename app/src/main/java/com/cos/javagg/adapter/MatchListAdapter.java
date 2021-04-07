@@ -89,7 +89,7 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.MyVi
                 intent.putExtra("UserChampionId", ChampionId);
 
                 sr.startActivity(intent);
-                Toast.makeText(sr, "matchGameId : " + matchGameId, Toast.LENGTH_SHORT).show();
+
 
             });
 
