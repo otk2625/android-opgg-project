@@ -40,5 +40,5 @@
 - https://github.com/KuTaeMo/JAVA.GG---JSP
 
 ### 영상
--
+- https://youtu.be/z8QLl5gVCA8
 
