@@ -49,7 +49,7 @@ public class JoinActivity extends AppCompatActivity {
         findById();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.25.18:8090")
+                .baseUrl("http://113.198.238.68:8090")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

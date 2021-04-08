@@ -54,7 +54,7 @@ public interface CommunityApi {
     Call<CMRespDto<Integer>> likesId(@Path(value = "boardId") int boardId, @Body int userId);
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.25.18:8090")
+            .baseUrl("http://113.198.238.68:8090")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 }

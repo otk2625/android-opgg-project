@@ -1,6 +1,7 @@
 package com.cos.javagg.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cos.javagg.MatchDetailActivity;
 import com.cos.javagg.R;
+import com.cos.javagg.SearchResultActivity;
 import com.cos.javagg.champ.ChampionList;
 import com.cos.javagg.champ.Calcu;
 import com.cos.javagg.model.detail.Participant;
@@ -79,12 +81,20 @@ public class MatchDetailWinListAdapter extends RecyclerView.Adapter<MatchDetailW
                 iv_detail_cs, tv_assist_solo, iv_detail_gold, iv_detail_deal;
         private AppCompatButton iv_detail_champ_level;
         private ProgressBar pg_detail;
+        private String sName;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             findById(itemView);
 
+            itemView.setOnClickListener(view -> {
+                String 공백제거 = sName.replace(" ", "");
+                Intent intent = new Intent(md, SearchResultActivity.class);
+                intent.putExtra("summonerName", 공백제거);
+                md.startActivity(intent);
+                Log.d(TAG, "MyViewHolder: 소환사 이름" + sName);
+            });
         }
 
         public void setItem(Participant participant, long totalDamage){
@@ -102,6 +112,7 @@ public class MatchDetailWinListAdapter extends RecyclerView.Adapter<MatchDetailW
             for (int i = 0; i< participantIdentities.size(); i++){
                 if(participantIdentities.get(i).getParticipantId() == participant.getParticipantId()){
                     iv_detail_summoner.setText(participantIdentities.get(i).getPlayer().getSummonerName());
+                    sName = participantIdentities.get(i).getPlayer().getSummonerName();
                 }
             }
 

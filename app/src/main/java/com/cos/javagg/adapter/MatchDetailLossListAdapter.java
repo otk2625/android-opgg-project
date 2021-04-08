@@ -1,6 +1,7 @@
 package com.cos.javagg.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -80,12 +81,20 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
                 iv_detail_cs, tv_assist_solo, iv_detail_gold, iv_detail_deal;
         private AppCompatButton iv_detail_champ_level;
         private ProgressBar pg_detail;
+        private String sName;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             findById(itemView);
 
+            itemView.setOnClickListener(view -> {
+                String 공백제거 = sName.replace(" ", "");
+                Intent intent = new Intent(md, SearchResultActivity.class);
+                intent.putExtra("summonerName", 공백제거);
+                md.startActivity(intent);
+                Log.d(TAG, "MyViewHolder: 소환사 이름" + sName);
+            });
         }
 
         public void setItem(Participant participant, long totalDamage){
@@ -103,8 +112,11 @@ public class MatchDetailLossListAdapter extends RecyclerView.Adapter<MatchDetail
             for (int i = 0; i< participantIdentities.size(); i++){
                 if(participantIdentities.get(i).getParticipantId() == participant.getParticipantId()){
                     iv_detail_summoner.setText(participantIdentities.get(i).getPlayer().getSummonerName());
+                    sName = participantIdentities.get(i).getPlayer().getSummonerName();
                 }
             }
+
+
 
             //킬뎃어시
             iv_detail_kill.setText(participant.getStats().getKills()+"");
